@@ -1,6 +1,6 @@
 <section class="content-header">
     <h1>Administración
-        <small><i class="fa fa-angle-right"></i> Ciudades de origen creadas</small>
+        <small>Ciudades de origen creadas</small>
     </h1>
 
     <ol class="breadcrumb">

@@ -1,6 +1,6 @@
 <section class="content-header">
     <h1>Administración
-        <small><i class="fa fa-angle-right"></i> Creación de ciudades de destino</small>
+        <small>Creación de ciudades de destino</small>
     </h1>
 
     <ol class="breadcrumb">

@@ -1,6 +1,6 @@
 <section class="content-header">
     <h1>Viajes
-        <small><i class="fa fa-angle-right"></i> Viajes registrados</small>
+        <small>Viajes registrados</small>
     </h1>
 
     <ol class="breadcrumb">

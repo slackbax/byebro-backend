@@ -5,7 +5,7 @@
 
 <section class="content-header">
     <h1>Cotizaciones
-        <small><i class="fa fa-angle-right"></i> Creación de cotización</small>
+        <small>Creación de cotización</small>
     </h1>
 
     <ol class="breadcrumb">

@@ -1,6 +1,6 @@
 <section class="content-header">
 	<h1>Administración
-		<small><i class="fa fa-angle-right"></i> Usuarios creados</small>
+		<small>Usuarios creados</small>
 	</h1>
 
 	<ol class="breadcrumb">

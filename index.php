@@ -341,9 +341,11 @@
     <script src="bower_components/fastclick/lib/fastclick.js"></script>
     <!-- MultiFile -->
     <script src="bower_components/multifile/jquery.MultiFile.min.js"></script>
+    <!-- NumberFormat -->
+    <script src="bower_components/number-format.js/lib/format.min.js"></script>
     <!-- iCheck -->
     <script src="plugins/iCheck/icheck.min.js"></script>
-    <!-- SISGDoc App -->
+    <!-- ByeBro App -->
     <script src="dist/js/bb.min.js"></script>
     <script src="dist/js/jquery.Rut.min.js"></script>
     <script src="dist/js/fn.js"></script>

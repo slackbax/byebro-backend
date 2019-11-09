@@ -5292,3 +5292,6 @@ button.btn-xs, a.btn-xs {
 .no-bottom {
   border-bottom : 0;
 }
+.input-number {
+  text-align: right;
+}

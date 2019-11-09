@@ -4,7 +4,7 @@
 
 <section class="content-header">
     <h1>Administración
-        <small><i class="fa fa-angle-right"></i> Edición de adicional</small>
+        <small>Edición de adicional</small>
     </h1>
 
     <ol class="breadcrumb">

@@ -37,6 +37,11 @@ class Participante
         $obj->par_email = utf8_encode($row['par_email']);
         $obj->par_telefono = utf8_encode($row['par_telefono']);
         $obj->par_encargado = $row['par_encargado'];
+        $obj->par_codigo = $row['par_codigo'];
+        $obj->par_cuota = $row['par_cuota'];
+        $obj->par_cotiza = $row['par_cotiza'];
+        $obj->par_viaja = $row['par_viaja'];
+        $obj->par_paga = $row['par_paga'];
         $obj->par_registro = $row['par_registro'];
 
         unset($db);
@@ -162,6 +167,32 @@ class Participante
     }
 
     /**
+     * @param $code
+     * @param null $db
+     * @return stdClass
+     */
+    public function getByCode($code, $db = null)
+    {
+        if (is_null($db)):
+            $db = new myDBC();
+        endif;
+
+        $stmt = $db->Prepare("SELECT par_id 
+                                    FROM bb_participante p
+                                    WHERE p.par_codigo = ?");
+
+        $stmt->bind_param("s", $code);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        $obj = $this->get($row['par_id']);
+
+        unset($db);
+        return $obj;
+    }
+
+    /**
      * @param $cot
      * @param $rut
      * @param $name
@@ -190,7 +221,7 @@ class Participante
             endif;
 
             $bind = $stmt->bind_param("issssississ", $db->clearText($cot), utf8_decode($db->clearText($rut)), utf8_decode($db->clearText($name)), utf8_decode($db->clearText($ap)),
-                utf8_decode($db->clearText($am)), $db->clearText($edad), utf8_decode($db->clearText($email)), utf8_decode($db->clearText($phone)), $cargo, $cotiza, $viaje);
+                utf8_decode($db->clearText($am)), $db->clearText($edad), utf8_decode($db->clearText(mb_strtolower($email))), utf8_decode($db->clearText($phone)), $cargo, $cotiza, $viaje);
 
             if (!$bind):
                 throw new Exception("La inserción del participante falló en su binding.");
@@ -201,6 +232,81 @@ class Participante
             endif;
 
             $result = array('estado' => true, 'msg' => $stmt->insert_id);
+            $stmt->close();
+            return $result;
+        } catch (Exception $e) {
+            $result = array('estado' => false, 'msg' => $e->getMessage());
+            return $result;
+        }
+    }
+
+    /**
+     * @param $id
+     * @param $cuota
+     * @param $codigo
+     * @param null $db
+     * @return array
+     */
+    public function setQuota($id, $cuota, $codigo, $db = null)
+    {
+        if (is_null($db)):
+            $db = new myDBC();
+        endif;
+
+        try {
+            $stmt = $db->Prepare("UPDATE bb_participante SET par_codigo = ?, par_cuota = ? WHERE par_id = ?");
+
+            if (!$stmt):
+                throw new Exception("La inserción de la cuota falló en su preparación.");
+            endif;
+
+            $bind = $stmt->bind_param("sii", $codigo, $db->clearText($cuota), $id);
+
+            if (!$bind):
+                throw new Exception("La inserción de la cuota falló en su binding.");
+            endif;
+
+            if (!$stmt->execute()):
+                throw new Exception("La inserción de la cuota falló en su ejecución.");
+            endif;
+
+            $result = array('estado' => true, 'msg' => $stmt->insert_id);
+            $stmt->close();
+            return $result;
+        } catch (Exception $e) {
+            $result = array('estado' => false, 'msg' => $e->getMessage());
+            return $result;
+        }
+    }
+
+    /**
+     * @param $id
+     * @param null $db
+     * @return array
+     */
+    public function setPago($id, $db = null) {
+        if (is_null($db)):
+            $db = new myDBC();
+        endif;
+
+        try {
+            $stmt = $db->Prepare("UPDATE bb_participante SET par_paga = TRUE WHERE par_id = ?");
+
+            if (!$stmt):
+                throw new Exception("La inserción del estado de pago falló en su preparación.");
+            endif;
+
+            $bind = $stmt->bind_param("i", $id);
+
+            if (!$bind):
+                throw new Exception("La inserción del estado de pago falló en su binding.");
+            endif;
+
+            if (!$stmt->execute()):
+                throw new Exception("La inserción del estado de pago falló en su ejecución.");
+            endif;
+
+            $result = array('estado' => true, 'msg' => 'OK');
             $stmt->close();
             return $result;
         } catch (Exception $e) {
@@ -236,7 +342,7 @@ class Participante
             endif;
 
             $bind = $stmt->bind_param("ssssissii", utf8_decode($db->clearText($rut)), utf8_decode($db->clearText($name)), utf8_decode($db->clearText($ap)),
-                utf8_decode($db->clearText($am)), $db->clearText($edad), utf8_decode($db->clearText($email)), utf8_decode($db->clearText($phone)), $viaje, $id);
+                utf8_decode($db->clearText($am)), $db->clearText($edad), utf8_decode($db->clearText(mb_strtolower($email))), utf8_decode($db->clearText($phone)), $viaje, $id);
 
             if (!$bind):
                 throw new Exception("La modificación del participante falló en su binding.");

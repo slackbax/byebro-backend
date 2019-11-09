@@ -1,6 +1,6 @@
 <section class="content-header">
     <h1>Administración
-        <small><i class="fa fa-angle-right"></i> Packs de comida creados</small>
+        <small>Packs de comida creados</small>
     </h1>
 
     <ol class="breadcrumb">

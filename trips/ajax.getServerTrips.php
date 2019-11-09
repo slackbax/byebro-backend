@@ -58,6 +58,7 @@ $columns = array(
                     $str = '<span class="label bg-success">' . $ves->ves_descripcion . '</span>';
                     break;
                 case 3:
+                case 5:
                     $str = '<span class="label bg-warning">' . $ves->ves_descripcion . '</span>';
                     break;
                 case 4:

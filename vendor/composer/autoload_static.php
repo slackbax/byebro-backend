@@ -15,6 +15,10 @@ class ComposerStaticInitc1e63a4958fc9867195415f5482179c7
         array (
             'React\\Promise\\' => 14,
         ),
+        'P' => 
+        array (
+            'PHPMailer\\PHPMailer\\' => 20,
+        ),
         'G' => 
         array (
             'GuzzleHttp\\Stream\\' => 18,
@@ -27,6 +31,10 @@ class ComposerStaticInitc1e63a4958fc9867195415f5482179c7
         'React\\Promise\\' => 
         array (
             0 => __DIR__ . '/..' . '/react/promise/src',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
         'GuzzleHttp\\Stream\\' => 
         array (

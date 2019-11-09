@@ -1,6 +1,7 @@
 <?php
 
-class Profile {
+class Profile
+{
     public function __construct()
     {
     }

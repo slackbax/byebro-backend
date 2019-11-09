@@ -81,9 +81,9 @@ class Viaje
     /**
      * @param $cot
      * @param null $db
-     * @return array
+     * @return stdClass
      */
-    public function getByCotizante($cot, $db = null)
+    public function getByCotizacion($cot, $db = null)
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -91,20 +91,16 @@ class Viaje
 
         $stmt = $db->Prepare("SELECT vi_id 
                                     FROM bb_viaje v
-                                    JOIN bb_cotizacion c ON v.cot_id = c.cot_id
-                                    WHERE c.co_id = ?");
+                                    WHERE cot_id = ?");
 
         $stmt->bind_param("i", $cot);
         $stmt->execute();
         $result = $stmt->get_result();
-        $lista = [];
-
-        while ($row = $result->fetch_assoc()):
-            $lista[] = $this->get($row['vi_id'], $db);
-        endwhile;
+        $row = $result->fetch_assoc();
+        $obj = $this->get($row['vi_id'], $db);
 
         unset($db);
-        return $lista;
+        return $obj;
     }
 
     /**

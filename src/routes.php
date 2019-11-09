@@ -21,6 +21,10 @@ elseif ($section == 'trips' and $_login):
         include 'trips/create-trip.php';
     elseif ($sbs == 'managetrips'):
         include 'trips/manage-trips.php';
+    elseif ($sbs == 'managequotas'):
+        include 'trips/manage-quotas.php';
+    elseif ($sbs == 'assignquota'):
+        include 'trips/assign-quota.php';
     else:
         include 'src/error.php';
     endif;
@@ -31,6 +35,14 @@ elseif ($section == 'participants' and $_login):
         include 'participants/create-participant.php';
     elseif ($sbs == 'manageparticipants'):
         include 'participants/manage-participants.php';
+    else:
+        include 'src/error.php';
+    endif;
+
+// Finanzas
+elseif ($section == 'finance' and $_login):
+    if ($sbs == 'manageoc' and $_admin):
+        include 'finance/manage-oc.php';
     else:
         include 'src/error.php';
     endif;

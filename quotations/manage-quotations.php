@@ -1,6 +1,6 @@
 <section class="content-header">
     <h1>Cotizaciones
-        <small><i class="fa fa-angle-right"></i> Cotizaciones registradas</small>
+        <small>Cotizaciones registradas</small>
     </h1>
 
     <ol class="breadcrumb">

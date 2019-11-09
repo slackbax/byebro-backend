@@ -4,7 +4,7 @@
 
 <section class="content-header">
 	<h1>Menú de Usuario
-		<small><i class="fa fa-angle-right"></i> Edición de perfil</small>
+		<small>Edición de perfil</small>
 	</h1>
 
 	<ol class="breadcrumb">

@@ -628,5 +628,4 @@ $(document).ready(function () {
         $(this).ajaxSubmit(options);
         return false;
     });
-})
-;
+});

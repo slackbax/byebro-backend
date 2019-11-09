@@ -3,7 +3,7 @@
 
 <section class="content-header">
     <h1>Administración
-        <small><i class="fa fa-angle-right"></i> Creación de alojamientos</small>
+        <small>Creación de alojamientos</small>
     </h1>
 
     <ol class="breadcrumb">

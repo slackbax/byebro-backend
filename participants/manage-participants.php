@@ -1,6 +1,6 @@
 <section class="content-header">
     <h1>Participantes
-        <small><i class="fa fa-angle-right"></i> Participantes registrados</small>
+        <small>Participantes registrados</small>
     </h1>
 
     <ol class="breadcrumb">

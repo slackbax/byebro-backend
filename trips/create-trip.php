@@ -18,7 +18,7 @@
 
 <section class="content-header">
     <h1>Viajes
-        <small><i class="fa fa-angle-right"></i> Creación de viaje</small>
+        <small>Creación de viaje</small>
     </h1>
 
     <ol class="breadcrumb">

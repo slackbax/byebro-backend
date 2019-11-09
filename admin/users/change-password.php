@@ -1,6 +1,6 @@
 <section class="content-header">
 	<h1>Menú de Usuario
-		<small><i class="fa fa-angle-right"></i> Cambio de contraseña</small>
+		<small>Cambio de contraseña</small>
 	</h1>
 
 	<ol class="breadcrumb">

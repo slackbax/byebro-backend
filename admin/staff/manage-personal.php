@@ -1,6 +1,6 @@
 <section class="content-header">
     <h1>Administración
-        <small><i class="fa fa-angle-right"></i> Personal creado</small>
+        <small>Personal creado</small>
     </h1>
 
     <ol class="breadcrumb">
