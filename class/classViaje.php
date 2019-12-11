@@ -23,7 +23,7 @@ class Viaje
                                     JOIN bb_cotizante co ON c.co_id = co.co_id
                                     JOIN bb_ciudad_origen bco on c.cio_id = bco.cio_id
                                     JOIN bb_ciudad_destino bcd on c.cid_id = bcd.cid_id
-                                    WHERE c.cot_id = ?");
+                                    WHERE v.vi_id = ?");
 
         $stmt->bind_param("i", $id);
         $stmt->execute();
