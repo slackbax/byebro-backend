@@ -39,12 +39,12 @@ $(document).ready(function () {
         if (response.type) {
             new Noty({
                 text: '<b>¡Éxito!</b><br>Las cuotas han sido asignadas correctamente.<br>Redirigiendo a la lista de viajes registrados...',
-                type: 'success'/*,
+                type: 'success',
                 callbacks: {
                     afterClose: function () {
                         document.location.replace('index.php?section=trips&sbs=managetrips');
                     }
-                }*/
+                }
             }).show();
         } else {
             if (response.code === 0) {
