@@ -13,7 +13,7 @@ $(document).ready(function () {
     function showResponse(response) {
         $('#submitLoader').css('display', 'none');
 
-        if (response.type === true) {
+        if (response.type) {
             new Noty({
                 text: '<b>¡Éxito!</b><br> El participante ha sido guardado correctamente.',
                 type: 'success'

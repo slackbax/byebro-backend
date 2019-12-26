@@ -22,7 +22,7 @@ $(document).ready(function () {
         $('#submitLoader').css('display', 'none');
         $('#sectionTabs a[href="#trip"]').tab('show');
 
-        if (response.type === true) {
+        if (response.type) {
             new Noty({
                 text: '<b>¡Éxito!</b><br> El viaje ha sido guardado correctamente.<br>Redirigiendo a la lista de viajes registrados...',
                 type: 'success',

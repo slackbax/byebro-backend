@@ -25,6 +25,8 @@ elseif ($section == 'trips' and $_login):
         include 'trips/manage-quotas.php';
     elseif ($sbs == 'assignquota'):
         include 'trips/assign-quota.php';
+    elseif ($sbs == 'assignstaff'):
+        include 'trips/assign-staff.php';
     else:
         include 'src/error.php';
     endif;

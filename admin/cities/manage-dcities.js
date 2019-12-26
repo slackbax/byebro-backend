@@ -41,7 +41,7 @@ $(document).ready(function () {
                     dataType: 'json',
                     data: {id: uid, type: 'd'}
                 }).done(function (response) {
-                    if (response.type === true) {
+                    if (response.type) {
                         new Noty({
                             text: '<b>¡Éxito!</b><br>La ciudad ha sido desactivada correctamente.',
                             type: 'success'
@@ -94,7 +94,7 @@ $(document).ready(function () {
                     dataType: 'json',
                     data: {id: uid, type: 'd'}
                 }).done(function (response) {
-                    if (response.type === true) {
+                    if (response.type) {
                         new Noty({
                             text: '<b>¡Éxito!</b><br>La ciudad ha sido activada correctamente.',
                             type: 'success'

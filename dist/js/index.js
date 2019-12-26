@@ -2,18 +2,20 @@ $(document).ready(function () {
 
 	$('table').tooltip({
 		html: true,
-		selector: '[data-tooltip=tooltip]'
+		selector: '[data-tooltip=tooltip]',
+		trigger: 'hover'
 	});
 
 	$('body').tooltip({
 		html: true,
-		selector: '[rel=tooltip]'
+		selector: '[rel=tooltip]',
+		trigger: 'hover'
 	});
 
 	$('#btn-help').click(function () {
 		swal({
 			title: "¿Necesitas ayuda?",
-			html: 'Para cualquier duda o sugerencia, puedes contactar al soporte de la aplicación al e-mail <a href="mailto:soportedesarrollo@ssconcepcion.cl">xxxxx@byebro.cl</a><br><br>',
+			html: 'Para cualquier duda o sugerencia, puedes contactar al soporte de la aplicación al e-mail <a href="mailto:">xxxxx@byebro.cl</a><br><br>',
 			type: "warning",
 			showCancelButton: false,
 			confirmButtonColor: "#DD6B55",

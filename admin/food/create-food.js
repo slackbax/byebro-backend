@@ -19,7 +19,7 @@ $(document).ready(function () {
     function showResponse(response) {
         $('#submitLoader').css('display', 'none');
 
-        if (response.type === true) {
+        if (response.type) {
             new Noty({
                 text: '<b>¡Éxito!</b><br>La comida ha sido guardada correctamente.',
                 type: 'success'

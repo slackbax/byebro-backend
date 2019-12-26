@@ -22,7 +22,7 @@ $(document).ready(function () {
         $('#submitLoader').css('display', 'none');
         $('#sectionTabs a[href="#trip"]').tab('show');
 
-        if (response.type === true) {
+        if (response.type) {
             new Noty({
                 text: '<b>¡Éxito!</b><br> La cotización ha sido guardada correctamente.',
                 type: 'success'
@@ -229,7 +229,7 @@ $(document).ready(function () {
             });
         },
         format_on: 'keyup'
-    }).change(function() {
+    }).change(function () {
         if ($.trim($(this).val()) === '') {
             $('#iNid').val('');
             $('#grut').removeClass('has-error has-success');
@@ -287,6 +287,19 @@ $(document).ready(function () {
             $('#g' + idn[1]).removeClass('has-success');
             $('#icon' + idn[1]).removeClass('fa-check');
         }
+    });
+
+    $('#btn-copy-cot').click(function () {
+        $('#iNrutpart1').val($('#iNrut').val());
+        $('#iNnamepart1').val($('#iNname').val());
+        $('#iNlnppart1').val($('#iNlastnamep').val());
+        $('#iNlnmpart1').val($('#iNlastnamem').val());
+        $('#iNemailpart1').val($('#iNemail').val());
+        $('#iNcodpart1').val($('#iNcod').val());
+        $('#iNphonepart1').val($('#iNphone').val());
+
+        $('#grutpart1, #gnamepart1, #glnppart1, #glnmpart1, #gemailpart1, #gphonepart1').addClass('has-success');
+        $('#iconrutpart1, #iconnamepart1, #iconlnppart1, #iconlnmpart1, #iconemailpart1, #iconphonepart1').addClass('fa-check');
     });
 
     $('#btn-add-part').click(function () {
@@ -484,7 +497,6 @@ $(document).ready(function () {
             $('#iNcant' + id[1]).val(1).prop('disabled', true);
         }
     });
-
 
     $('#btn-people').click(function () {
         var chk = true;

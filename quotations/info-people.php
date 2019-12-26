@@ -16,6 +16,10 @@
                                 Encargado del Viaje
                             </label>
                         </div>
+
+                        <div class="form-group col-xs-3 col-xs-offset-5 text-right">
+                            <button type="button" class="btn btn-warning btn-sm" id="btn-copy-cot"><i class="fa fa-copy"></i> Copiar cotizante como encargado</button>
+                        </div>
                     </div>
 
                     <div class="row">
@@ -66,7 +70,7 @@
                         </div>
 
                         <div class="form-group col-md-2 col-lg-1">
-                            <label class="control-label" for="iNcodpart1">País</label>
+                            <label class="control-label" for="iNcodpart1">País *</label>
                             <select class="form-control" id="iNcodpart1" name="icodpart[]">
                                 <option value="+56">Chile (56)</option>
                                 <option value="+54">Argentina (54)</option>

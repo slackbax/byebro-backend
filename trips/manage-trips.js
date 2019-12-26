@@ -85,7 +85,7 @@ $(document).ready(function () {
                     dataType: 'json',
                     data: {id: uid, val: input}
                 }).done(function (response) {
-                    if (response.type === true) {
+                    if (response.type) {
                         new Noty({
                             text: '<b>¡Éxito!</b><br>El viaje ha sido revalorizado correctamente.',
                             type: 'success'
@@ -133,7 +133,7 @@ $(document).ready(function () {
                     dataType: 'json',
                     data: {id: uid}
                 }).done(function (response) {
-                    if (response.type === true) {
+                    if (response.type) {
                         new Noty({
                             text: '<b>¡Éxito!</b><br>El viaje ha sido rechazado correctamente.',
                             type: 'success'

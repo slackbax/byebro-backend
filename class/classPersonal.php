@@ -29,7 +29,7 @@ class Personal
         $row = $result->fetch_assoc();
 
         $obj = new stdClass();
-        $obj->per_id = $row['per_id'];
+        $obj->per_id = $id;
         $obj->us_id = $row['us_id'];
         $obj->us_username = utf8_encode($row['us_username']);
         $obj->per_nombres = utf8_encode($row['per_nombres']);
@@ -104,7 +104,36 @@ class Personal
      * @param null $db
      * @return array
      */
-    public function getCities($id, $db = null) {
+    public function getByCity($id, $db = null)
+    {
+        if (is_null($db)):
+            $db = new myDBC();
+        endif;
+
+        $stmt = $db->Prepare("SELECT per_id
+                                    FROM bb_personal_ciudad pc
+                                    WHERE cid_id = ?");
+
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $lista = [];
+
+        while ($row = $result->fetch_assoc()):
+            $lista[] = $this->get($row['per_id']);
+        endwhile;
+
+        unset($db);
+        return $lista;
+    }
+
+    /**
+     * @param $id
+     * @param null $db
+     * @return array
+     */
+    public function getCities($id, $db = null)
+    {
         if (is_null($db)):
             $db = new myDBC();
         endif;
@@ -128,6 +157,66 @@ class Personal
 
         unset($db);
         return $lista;
+    }
+
+    /**
+     * @param $id
+     * @param null $db
+     * @return array
+     */
+    public function getByViaje($id, $db = null)
+    {
+        if (is_null($db)):
+            $db = new myDBC();
+        endif;
+
+        $stmt = $db->Prepare("SELECT *
+                                    FROM bb_personal_cargo pc
+                                    JOIN bb_cargo bc on pc.car_id = bc.car_id
+                                    WHERE vi_id = ?");
+
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $lista = [];
+
+        while ($row = $result->fetch_assoc()):
+            $obj = $this->get($row['per_id']);
+            $obj->car_id = $row['car_id'];
+            $obj->car_nombre = utf8_encode($row['car_nombre']);
+            $obj->car_descripcion = utf8_encode($row['car_descripcion']);
+            $obj->car_registro = $row['pec_registro'];
+            $lista[] = $obj;
+        endwhile;
+
+        unset($db);
+        return $lista;
+    }
+
+    /**
+     * @param $id
+     * @param $vi
+     * @param $car
+     * @param null $db
+     * @return mixed
+     */
+    public function getByTrip($id, $vi, $car, $db = null)
+    {
+        if (is_null($db)):
+            $db = new myDBC();
+        endif;
+
+        $stmt = $db->Prepare("SELECT per_id
+                                    FROM bb_personal_cargo pc
+                                    WHERE per_id = ? AND vi_id = ? AND car_id = ?");
+
+        $stmt->bind_param("iii", $id, $vi, $car);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        unset($db);
+        return $row['per_id'];
     }
 
     /**
@@ -177,7 +266,8 @@ class Personal
      * @param null $db
      * @return array
      */
-    public function setUser($id, $user, $db = null) {
+    public function setUser($id, $user, $db = null)
+    {
         if (is_null($db)):
             $db = new myDBC();
         endif;
@@ -252,7 +342,8 @@ class Personal
      * @param null $db
      * @return array
      */
-    public function setCity($id, $city, $db = null) {
+    public function setCity($id, $city, $db = null)
+    {
         if (is_null($db)):
             $db = new myDBC();
         endif;
@@ -285,30 +376,32 @@ class Personal
 
     /**
      * @param $id
-     * @param $pic
+     * @param $vi
+     * @param $cargo
      * @param null $db
      * @return array
-     *
-    public function setPicture($id, $pic, $db = null)
+     */
+    public function setViaje($id, $vi, $cargo, $db = null)
     {
         if (is_null($db)):
             $db = new myDBC();
         endif;
 
         try {
-            $stmt = $db->Prepare("UPDATE bb_personal SET per_pic = ? WHERE per_id = ?");
+            $stmt = $db->Prepare("INSERT INTO bb_personal_cargo (car_id, vi_id, per_id) VALUES (?, ?, ?)");
 
             if (!$stmt):
-                throw new Exception("La inserción de la imagen falló en su preparación.");
+                throw new Exception("La inserción del staff falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("si", $pic, $id);
+            $bind = $stmt->bind_param("iii", $db->clearText($cargo), $db->clearText($vi), $db->clearText($id));
+
             if (!$bind):
-                throw new Exception("La inserción de la imagen falló en su binding.");
+                throw new Exception("La inserción del staff falló en su binding.");
             endif;
 
             if (!$stmt->execute()):
-                throw new Exception("La inserción de la imagen falló en su ejecución.");
+                throw new Exception("La inserción del staff falló en su ejecución.");
             endif;
 
             $result = array('estado' => true, 'msg' => true);
@@ -318,7 +411,7 @@ class Personal
             $result = array('estado' => false, 'msg' => $e->getMessage());
             return $result;
         }
-    } */
+    }
 
     /**
      * @param $id
@@ -327,7 +420,6 @@ class Personal
      * @param $am
      * @param $email
      * @param $phone
-     * @param $active
      * @param null $db
      * @return array
      */
@@ -369,7 +461,8 @@ class Personal
      * @param null $db
      * @return array
      */
-    public function modUser($id, $user, $db = null) {
+    public function modUser($id, $user, $db = null)
+    {
         if (is_null($db)):
             $db = new myDBC();
         endif;
@@ -405,7 +498,8 @@ class Personal
      * @param null $db
      * @return array
      */
-    public function delCities($id, $db = null) {
+    public function delCities($id, $db = null)
+    {
         if (is_null($db)):
             $db = new myDBC();
         endif;

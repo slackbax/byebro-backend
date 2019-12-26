@@ -40,7 +40,7 @@ $(document).ready(function () {
                     dataType: 'json',
                     data: {id: uid, type: 'o'}
                 }).done(function (response) {
-                    if (response.type === true) {
+                    if (response.type) {
                         new Noty({
                             text: '<b>¡Éxito!</b><br>El pack ha sido desactivado correctamente.',
                             type: 'success'
@@ -93,7 +93,7 @@ $(document).ready(function () {
                     dataType: 'json',
                     data: {id: uid, type: 'o'}
                 }).done(function (response) {
-                    if (response.type === true) {
+                    if (response.type) {
                         new Noty({
                             text: '<b>¡Éxito!</b><br>El pack ha sido activado correctamente.',
                             type: 'success'

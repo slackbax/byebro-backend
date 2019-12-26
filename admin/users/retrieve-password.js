@@ -8,7 +8,7 @@ $(document).ready(function () {
     function showResponse(response) {
         $('#submitLoader').css('display', 'none');
 
-        if (response.type === true) {
+        if (response.type) {
             new Noty({
                 text: '<b>¡Éxito!</b><br>La nueva contraseña ha sido enviada a su correo. Volviendo a la pantalla de inicio...',
                 type: 'success',

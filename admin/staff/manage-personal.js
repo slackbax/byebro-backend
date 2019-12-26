@@ -45,7 +45,7 @@ $(document).ready(function () {
                     dataType: 'json',
                     data: {id: uid}
                 }).done(function (response) {
-                    if (response.type === true) {
+                    if (response.type) {
                         new Noty({
                             text: '<b>¡Éxito!</b><br>El empleado ha sido desactivado correctamente.',
                             type: 'success'
@@ -98,7 +98,7 @@ $(document).ready(function () {
                     dataType: 'json',
                     data: {id: uid}
                 }).done(function (response) {
-                    if (response.type === true) {
+                    if (response.type) {
                         new Noty({
                             text: '<b>¡Éxito!</b><br>El empleado ha sido activado correctamente.',
                             type: 'success'

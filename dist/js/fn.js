@@ -118,6 +118,7 @@ $.fn.clearForm = function () {
 
 $.fn.datepicker.defaults.language = 'es';
 $.fn.datepicker.defaults.orientation = 'bottom left';
+$.fn.datepicker.defaults.autoclose = true;
 
 $.fn.daterangepicker.defaultOptions = ({
 	'opens': 'right',

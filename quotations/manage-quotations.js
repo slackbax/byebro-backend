@@ -84,7 +84,7 @@ $(document).ready(function () {
                     dataType: 'json',
                     data: {id: uid, val: input}
                 }).done(function (response) {
-                    if (response.type === true) {
+                    if (response.type) {
                         new Noty({
                             text: '<b>¡Éxito!</b><br>La cotización ha sido valorizada correctamente.',
                             type: 'success'
@@ -132,7 +132,7 @@ $(document).ready(function () {
                     dataType: 'json',
                     data: {id: uid}
                 }).done(function (response) {
-                    if (response.type === true) {
+                    if (response.type) {
                         new Noty({
                             text: '<b>¡Éxito!</b><br>La cotización ha sido rechazada correctamente.',
                             type: 'success'

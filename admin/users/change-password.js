@@ -24,7 +24,7 @@ $(document).ready(function () {
     function showResponse(response) {
         $('#submitLoader').css('display', 'none');
 
-        if (response.type === true) {
+        if (response.type) {
             new Noty({
                 text: '<b>¡Éxito!</b><br>Las contraseñas han sido guardadas correctamente.<br>Volviendo a la pantalla de inicio...',
                 type: 'success',

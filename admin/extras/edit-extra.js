@@ -19,7 +19,7 @@ $(document).ready(function () {
     function showResponse(response) {
         $('#submitLoader').css('display', 'none');
 
-        if (response.type === true) {
+        if (response.type) {
             new Noty({
                 text: '<b>¡Éxito!</b><br>El adicional ha sido editado correctamente. Actualizando datos...',
                 type: 'success',

@@ -1,8 +1,9 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo text-red">
-        <i class="fa fa-cogs"></i>
-        <a class="btn-block" href="index.php"><b>Bye</b>Bro</a>
+        <a class="btn-block" href="index.php">
+            <img src="dist/img/logo.png" style="width: 330px">
+        </a>
     </div>
 
     <div class="login-box-body text-center">
