@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="132093b4-da33-4e49-8cfa-262b006ec51e" name="byebro" url="http://www.byebro.com/admin">
+        <fileTransfer host="104.248.216.189" port="22" privateKey="C:\Users\skybax\.ssh\mkey.ppk" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

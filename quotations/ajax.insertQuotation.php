@@ -92,7 +92,7 @@ if (extract($_POST)):
             $cargo = ($k == 0) ? true : false;
             $phone = '(' . $icodpart[$k] . ')' . $iphonepart[$k];
 
-            $ins_part = $par->set($ins_cot['msg'], $v, $inamepart[$k], $ilnppart[$k], $ilnmpart[$k], $iedadpart[$k], $iemailpart[$k], $phone, $cargo, true, false, $db);
+            $ins_part = $par->set($ins_cot['msg'], $v, $inamepart[$k], $ilnppart[$k], $ilnmpart[$k], $iedadpart[$k], $iemailpart[$k], $phone, $cargo, true, 0, $db);
 
             if ($ins_part['estado'] == false):
                 throw new Exception('Error al guardar los datos del participante. ' . $ins_part['msg'], 0);
