@@ -50,20 +50,22 @@ if (extract($_POST)):
                 throw new Exception('Error al establecer la cuota. ' . $ins['msg'], 0);
             endif;
 
-            $mail->addAddress($p->par_email, $p->par_email);
-            $tmp = explode(' ', $p->par_nombres);
-            $subname = $tmp[0];
-            $mail->Body = utf8_decode('Hola ' . $subname . ',<br><br>' .
-                'Tu cuota para el viaje ya está lista!<br>' .
-                'Puedes acceder a pagar desde el siguiente enlace:<br><br>' .
-                '<strong>https://www.byebro.com/pagos/?pgid=' . $str . '</strong><br><br>' .
-                'Cualquier cosa, y si no estás seguro de que nos dejaste bien tu número, puedes escribirle a Martín directamente al <strong>+56 9 7648 0285</strong>.<br>' .
-                'Saludos,<br><br>' .
-                'El team Byebro!');
+            if ($iamount[$k] > 0):
+                $mail->addAddress($p->par_email, $p->par_email);
+                $tmp = explode(' ', $p->par_nombres);
+                $subname = $tmp[0];
+                $mail->Body = utf8_decode('Hola ' . $subname . ',<br><br>' .
+                    'Tu cuota para el viaje ya está lista!<br>' .
+                    'Puedes acceder a pagar desde el siguiente enlace:<br><br>' .
+                    '<strong>https://www.byebro.com/pagos/?pgid=' . $str . '</strong><br><br>' .
+                    'Cualquier cosa, y si no estás seguro de que nos dejaste bien tu número, puedes escribirle a Martín directamente al <strong>+56 9 7648 0285</strong>.<br>' .
+                    'Saludos,<br><br>' .
+                    'El team Byebro!');
 
-            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+                $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-            $mail->send();
+                $mail->send();
+            endif;
         endforeach;
 
         $u_st = $via->setLast($iid);
@@ -89,3 +91,4 @@ if (extract($_POST)):
         echo json_encode($response);
     }
 endif;
+
