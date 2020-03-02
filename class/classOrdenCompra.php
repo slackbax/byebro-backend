@@ -1,6 +1,6 @@
 <?php
 
-class Oc
+class OrdenCompra
 {
     public function __construct()
     {

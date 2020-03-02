@@ -1,14 +1,11 @@
 <?php
 
 include '../class/classMyDBC.php';
-include '../class/classOC.php';
+include '../class/classOrdenCompra.php';
 include '../src/fn.php';
 session_start();
-$_admin = false;
 
-if (isset($_SESSION['bb_useradmin']) and $_SESSION['bb_useradmin']): $_admin = true; endif;
-$oc = new Oc();
-
+$oc = new OrdenCompra();
 // DB table to use
 $table = 'bb_oc';
 
@@ -70,19 +67,10 @@ $columns = array(
 
             return $str;
         }
-    ),
-    array('db' => 'oc_id', 'dt' => 10, 'field' => 'oc_id',
-        'formatter' => function ($d, $row){
-            $string = '';
-
-            $string .= '<button id="det_' . $d . '" class="quotDetails btn btn-xs btn-info" data-toggle="modal" data-target="#modal-details" data-tooltip="tooltip" data-placement="top" title="Ver detalles"><i class="fa fa-search-plus"></i></button>';
-
-            return $string;
-        }
     )
 );
 
-$joinQuery = "FROM bb_oc c";
+$joinQuery = "";
 $extraWhere = "";
 $groupBy = "";
 $having = "";
