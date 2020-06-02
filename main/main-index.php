@@ -11,7 +11,7 @@ $last_f = 5;
 <?php $us_co = $co->getByUser($_SESSION['bb_userid']) ?>
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
         <section class="content-header">
             <div class="callout">
                 <h2><i class="fa fa-check"></i>
@@ -101,29 +101,6 @@ $last_f = 5;
                             </div>
                         </div>
                     </a>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <div class="col-md-4">
-        <section class="content container-fluid">
-
-            <div class="box box-info box-solid">
-                <div class="box-header">
-                    <i class="fa fa-info-circle"></i>
-                    <h3 class="box-title">Últimas actualizaciones <!--<span class="badge bg-green">2 new</span>--></h3>
-
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
-                    </div>
-                </div>
-
-                <div class="box-body">
-                    <p><strong>V1.0</strong></p>
-                    <ul>
-                        <li>Presentación de maqueta.</li>
-                    </ul>
                 </div>
             </div>
         </section>

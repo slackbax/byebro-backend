@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig host="104.248.216.189" id="d57f5d9e-2770-4cf6-8c65-f1f51b475eec" keyPath="C:\Users\skybax\.ssh\mkey.ppk" port="22" customName="byebro" nameFormat="CUSTOM" username="root" />
+      <sshConfig host="104.248.216.189" id="e71c8ae3-9a04-4c55-abb4-24fd6a26a94c" keyPath="C:\Users\skybax\.ssh\mkey.ppk" port="22" customName="byebro" nameFormat="CUSTOM" username="root" />
+    </configs>
+  </component>
+</project>

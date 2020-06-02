@@ -11,6 +11,8 @@ elseif ($section == 'quotations' and $_login):
         include 'quotations/create-quotation.php';
     elseif ($sbs == 'managequotations'):
         include 'quotations/manage-quotations.php';
+    elseif ($sbs == 'editquotation' and ($_admin or $_boss)):
+        include 'quotations/edit-quotation.php';
     else:
         include 'src/error.php';
     endif;
@@ -21,11 +23,11 @@ elseif ($section == 'trips' and $_login):
         include 'trips/create-trip.php';
     elseif ($sbs == 'managetrips'):
         include 'trips/manage-trips.php';
-    elseif ($sbs == 'managequotas'):
+    elseif ($sbs == 'managequotas' and $_admin):
         include 'trips/manage-quotas.php';
-    elseif ($sbs == 'assignquota'):
+    elseif ($sbs == 'assignquota' and $_admin):
         include 'trips/assign-quota.php';
-    elseif ($sbs == 'assignstaff'):
+    elseif ($sbs == 'assignstaff' and $_admin):
         include 'trips/assign-staff.php';
     else:
         include 'src/error.php';

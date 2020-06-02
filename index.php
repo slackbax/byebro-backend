@@ -1,5 +1,7 @@
 <?php session_start() ?>
 <?php $_login = false ?>
+<?php $_staff = false ?>
+<?php $_boss = false ?>
 <?php $_admin = false ?>
 
 <?php require 'class/classMyDBC.php' ?>
@@ -11,6 +13,8 @@
 <?php extract($_GET) ?>
 <?php if (isset($_SESSION['bb_userid'])): $_login = true; endif ?>
 <?php if (isset($_SESSION['bb_useradmin']) and $_SESSION['bb_useradmin']): $_admin = true; endif ?>
+<?php if (isset($_SESSION['bb_userstaff']) and $_SESSION['bb_userstaff']): $_staff = true; endif ?>
+<?php if (isset($_SESSION['bb_usergroupboss']) and $_SESSION['bb_usergroupboss']): $_boss = true; endif ?>
 
 <!DOCTYPE html>
 

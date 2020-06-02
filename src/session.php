@@ -124,6 +124,10 @@ try {
 
     if ($q_data['perf_id'] === 1):
         $_SESSION['bb_useradmin'] = true;
+    elseif ($q_data['perf_id'] === 2):
+        $_SESSION['bb_userstaff'] = true;
+    elseif ($q_data['perf_id'] === 3):
+        $_SESSION['bb_usergroupboss'] = true;
     endif;
 
     $set_last = $ses->setLast($q_data['us_id'], $qr);
