@@ -11,7 +11,7 @@ class User
      * @param null $db
      * @return stdClass
      */
-    public function get($id, $db = null)
+    public function get($id, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -45,13 +45,13 @@ class User
      * @param null $db
      * @return array
      */
-    public function getAll($db = null)
+    public function getAll($db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
         endif;
 
-        $stmt = $db->Prepare("SELECT us_id FROM bb_usuario WHERE us_activo = TRUE ORDER BY us_ap ASC, us_am ASC, us_nombres ASC");
+        $stmt = $db->Prepare("SELECT us_id FROM bb_usuario WHERE us_activo = TRUE ORDER BY us_ap, us_am, us_nombres");
         $stmt->execute();
         $result = $stmt->get_result();
         $lista = [];
@@ -69,14 +69,15 @@ class User
      * @param null $db
      * @return stdClass
      */
-    public function getByUsername($str, $db = null)
+    public function getByUsername($str, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
         endif;
 
         $stmt = $db->Prepare("SELECT us_id FROM bb_usuario WHERE us_username = ?");
-        $stmt->bind_param("s", utf8_decode($db->clearText($str)));
+        $str = utf8_decode($db->clearText($str));
+        $stmt->bind_param("s", $str);
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
@@ -92,7 +93,7 @@ class User
      * @param null $db
      * @return array
      */
-    public function getByString($user, $db = null)
+    public function getByString($user, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -111,7 +112,7 @@ class User
         $lista = [];
 
         while ($row = $result->fetch_assoc()):
-            $lista[] = array('id' => $row['us_id'], 'value' => utf8_encode('[' . $row['us_id'] . '] ' . $row['us_nombres'] . ' ' . $row['us_ap'] . ' ('. $row['us_username'] .')'));
+            $lista[] = array('id' => $row['us_id'], 'value' => utf8_encode('[' . $row['us_id'] . '] ' . $row['us_nombres'] . ' ' . $row['us_ap'] . ' (' . $row['us_username'] . ')'));
         endwhile;
 
         unset($db);
@@ -123,7 +124,7 @@ class User
      * @param null $db
      * @return array
      */
-    public function existsUser($user, $db = null)
+    public function existsUser($user, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -136,7 +137,8 @@ class User
                 throw new Exception("La búsqueda del usuario falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("s", $db->clearText($user));
+            $user = $db->clearText($user);
+            $bind = $stmt->bind_param("s", $user);
             if (!$bind):
                 throw new Exception("La búsqueda del usuario falló en su binding.");
             endif;
@@ -157,8 +159,7 @@ class User
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -173,7 +174,7 @@ class User
      * @param null $db
      * @return array
      */
-    public function set($profile, $name, $ap, $am, $email, $user, $pass, $db = null)
+    public function set($profile, $name, $ap, $am, $email, $user, $pass, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -186,8 +187,14 @@ class User
                 throw new Exception("La inserción del usuario falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("issssss", $db->clearText($profile), utf8_decode($db->clearText($name)), utf8_decode($db->clearText($ap)), utf8_decode($db->clearText($am)),
-                utf8_decode($db->clearText($email)), utf8_decode($db->clearText($user)), md5(utf8_decode($db->clearText($pass))));
+            $profile = $db->clearText($profile);
+            $name = utf8_decode($db->clearText($name));
+            $ap = utf8_decode($db->clearText($ap));
+            $am = utf8_decode($db->clearText($am));
+            $email = utf8_decode($db->clearText($email));
+            $user = utf8_decode($db->clearText($user));
+            $pass = md5(utf8_decode($db->clearText($pass)));
+            $bind = $stmt->bind_param("issssss", $profile, $name, $ap, $am, $email, $user, $pass);
 
             if (!$bind):
                 throw new Exception("La inserción del usuario falló en su binding.");
@@ -201,8 +208,7 @@ class User
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -212,7 +218,7 @@ class User
      * @param null $db
      * @return array
      */
-    public function setPicture($id, $pic, $db = null)
+    public function setPicture($id, $pic, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -238,8 +244,7 @@ class User
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -248,7 +253,7 @@ class User
      * @param null $db
      * @return array
      */
-    public function del($id, $db = null)
+    public function del($id, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -274,8 +279,7 @@ class User
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -284,7 +288,7 @@ class User
      * @param null $db
      * @return array
      */
-    public function activate($id, $db = null)
+    public function activate($id, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -310,8 +314,7 @@ class User
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -327,7 +330,7 @@ class User
      * @param null $db
      * @return array
      */
-    public function mod($id, $profile, $name, $ap, $am, $email, $pass, $active, $db = null)
+    public function mod($id, $profile, $name, $ap, $am, $email, $pass, $active, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -348,7 +351,12 @@ class User
                 throw new Exception("La modificación del usuario falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("issssssi", $db->clearText($profile), utf8_decode($db->clearText($name)), utf8_decode($db->clearText($ap)), utf8_decode($db->clearText($am)), $db->clearText($email), $txt_p, $active, $id);
+            $profile = $db->clearText($profile);
+            $name = utf8_decode($db->clearText($name));
+            $ap = utf8_decode($db->clearText($ap));
+            $am = utf8_decode($db->clearText($am));
+            $email = $db->clearText($email);
+            $bind = $stmt->bind_param("issssssi", $profile, $name, $ap, $am, $email, $txt_p, $active, $id);
 
             if (!$bind):
                 throw new Exception("La modificación del usuario falló en su binding.");
@@ -362,8 +370,7 @@ class User
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -376,7 +383,7 @@ class User
      * @param null $db
      * @return array
      */
-    public function modProfile($id, $name, $ap, $am, $email, $db = null)
+    public function modProfile($id, $name, $ap, $am, $email, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -389,7 +396,11 @@ class User
                 throw new Exception("La modificación del usuario falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("ssssi", utf8_decode($db->clearText($name)), utf8_decode($db->clearText($ap)), utf8_decode($db->clearText($am)), $db->clearText($email), $id);
+            $name = utf8_decode($db->clearText($name));
+            $ap = utf8_decode($db->clearText($ap));
+            $am = utf8_decode($db->clearText($am));
+            $email = $db->clearText($email);
+            $bind = $stmt->bind_param("ssssi", $name, $ap, $am, $email, $id);
             if (!$bind):
                 throw new Exception("La modificación del usuario falló en su binding.");
             endif;
@@ -402,8 +413,7 @@ class User
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -413,7 +423,7 @@ class User
      * @param null $db
      * @return array
      */
-    public function modPass($id, $pass, $db = null)
+    public function modPass($id, $pass, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -441,8 +451,7 @@ class User
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 }

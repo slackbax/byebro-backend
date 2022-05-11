@@ -11,7 +11,7 @@ class Extra
      * @param null $db
      * @return stdClass
      */
-    public function get($id, $db = null)
+    public function get($id, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -38,13 +38,13 @@ class Extra
      * @param null $db
      * @return array
      */
-    public function getAll($db = null)
+    public function getAll($db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
         endif;
 
-        $stmt = $db->Prepare("SELECT adi_id FROM bb_adicional WHERE adi_activo IS TRUE ORDER BY adi_nombre ASC");
+        $stmt = $db->Prepare("SELECT adi_id FROM bb_adicional WHERE adi_activo IS TRUE ORDER BY adi_nombre");
         $stmt->execute();
         $result = $stmt->get_result();
         $lista = [];
@@ -62,13 +62,13 @@ class Extra
      * @param null $db
      * @return array
      */
-    public function getByType($t, $db = null)
+    public function getByType($t, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
         endif;
 
-        $stmt = $db->Prepare("SELECT adi_id FROM bb_adicional WHERE adi_grupal = ? AND adi_activo IS TRUE ORDER BY adi_nombre ASC");
+        $stmt = $db->Prepare("SELECT adi_id FROM bb_adicional WHERE adi_grupal = ? AND adi_activo IS TRUE ORDER BY adi_nombre");
 
         $stmt->bind_param("i", $t);
         $stmt->execute();
@@ -88,7 +88,7 @@ class Extra
      * @param null $db
      * @return array
      */
-    public function getByCotizacion($cot, $db = null)
+    public function getByCotizacion($cot, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -116,7 +116,7 @@ class Extra
      * @param null $db
      * @return array
      */
-    public function getByViaje($cot, $db = null)
+    public function getByViaje($cot, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -144,7 +144,7 @@ class Extra
      * @param null $db
      * @return array
      */
-    public function existsExtra($name, $db = null)
+    public function existsExtra($name, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -157,7 +157,8 @@ class Extra
                 throw new Exception("La búsqueda del adicional falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("s", $db->clearText($name));
+            $name = $db->clearText($name);
+            $bind = $stmt->bind_param("s", $name);
             if (!$bind):
                 throw new Exception("La búsqueda del adicional falló en su binding.");
             endif;
@@ -178,8 +179,7 @@ class Extra
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -190,7 +190,7 @@ class Extra
      * @param null $db
      * @return array
      */
-    public function set($name, $group, $desc, $db = null)
+    public function set($name, $group, $desc, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -203,7 +203,10 @@ class Extra
                 throw new Exception("La inserción del adicional falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("sis", utf8_decode($db->clearText($name)), $db->clearText($group), utf8_decode($db->clearText($desc)));
+            $name = utf8_decode($db->clearText($name));
+            $group = $db->clearText($group);
+            $desc = utf8_decode($db->clearText($desc));
+            $bind = $stmt->bind_param("sis", $name, $group, $desc);
 
             if (!$bind):
                 throw new Exception("La inserción del adicional falló en su binding.");
@@ -217,8 +220,7 @@ class Extra
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -228,7 +230,7 @@ class Extra
      * @param null $db
      * @return array
      */
-    public function setState($id, $state, $db = null)
+    public function setState($id, $state, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -241,7 +243,9 @@ class Extra
                 throw new Exception("La actualización del adicional falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("ii", $db->clearText($state), $db->clearText($id));
+            $state = $db->clearText($state);
+            $id = $db->clearText($id);
+            $bind = $stmt->bind_param("ii", $state, $id);
 
             if (!$bind):
                 throw new Exception("La actualización del adicional falló en su binding.");
@@ -255,8 +259,7 @@ class Extra
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -268,7 +271,7 @@ class Extra
      * @param null $db
      * @return array
      */
-    public function mod($id, $name, $group, $desc, $db = null)
+    public function mod($id, $name, $group, $desc, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -281,7 +284,10 @@ class Extra
                 throw new Exception("La modificación del adicional falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("sisi", utf8_decode($db->clearText($name)), $db->clearText($group), utf8_decode($db->clearText($desc)), $id);
+            $name = utf8_decode($db->clearText($name));
+            $group = $db->clearText($group);
+            $desc = utf8_decode($db->clearText($desc));
+            $bind = $stmt->bind_param("sisi", $name, $group, $desc, $id);
 
             if (!$bind):
                 throw new Exception("La modificación del adicional falló en su binding.");
@@ -295,8 +301,7 @@ class Extra
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 }

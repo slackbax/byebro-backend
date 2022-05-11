@@ -11,7 +11,7 @@ class Food
      * @param null $db
      * @return stdClass
      */
-    public function get($id, $db = null)
+    public function get($id, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -37,13 +37,13 @@ class Food
      * @param null $db
      * @return array
      */
-    public function getAll($db = null)
+    public function getAll($db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
         endif;
 
-        $stmt = $db->Prepare("SELECT com_id FROM bb_comida ORDER BY com_nombre ASC");
+        $stmt = $db->Prepare("SELECT com_id FROM bb_comida ORDER BY com_nombre");
         $stmt->execute();
         $result = $stmt->get_result();
         $lista = [];
@@ -61,7 +61,7 @@ class Food
      * @param null $db
      * @return array
      */
-    public function existsFood($food, $db = null)
+    public function existsFood($food, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -74,7 +74,8 @@ class Food
                 throw new Exception("La búsqueda del pack falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("s", $db->clearText($food));
+            $food = $db->clearText($food);
+            $bind = $stmt->bind_param("s", $food);
             if (!$bind):
                 throw new Exception("La búsqueda del pack falló en su binding.");
             endif;
@@ -95,8 +96,7 @@ class Food
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -106,7 +106,7 @@ class Food
      * @param null $db
      * @return array
      */
-    public function set($food, $desc, $db = null)
+    public function set($food, $desc, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -119,7 +119,9 @@ class Food
                 throw new Exception("La inserción del pack falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("ss", utf8_decode($db->clearText($food)), utf8_decode($db->clearText($desc)));
+            $food = utf8_decode($db->clearText($food));
+            $desc = utf8_decode($db->clearText($desc));
+            $bind = $stmt->bind_param("ss", $food, $desc);
 
             if (!$bind):
                 throw new Exception("La inserción del pack falló en su binding.");
@@ -133,8 +135,7 @@ class Food
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -144,7 +145,7 @@ class Food
      * @param null $db
      * @return array
      */
-    public function setState($id, $state, $db = null)
+    public function setState($id, $state, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -157,7 +158,9 @@ class Food
                 throw new Exception("La actualización del pack falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("ii", $db->clearText($state), $db->clearText($id));
+            $state = $db->clearText($state);
+            $id = $db->clearText($id);
+            $bind = $stmt->bind_param("ii", $state, $id);
 
             if (!$bind):
                 throw new Exception("La actualización del pack falló en su binding.");
@@ -171,8 +174,7 @@ class Food
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -183,7 +185,7 @@ class Food
      * @param null $db
      * @return array
      */
-    public function mod($id, $food, $desc, $db = null)
+    public function mod($id, $food, $desc, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -196,7 +198,9 @@ class Food
                 throw new Exception("La modificación del pack falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("ssi", utf8_decode($db->clearText($food)), utf8_decode($db->clearText($desc)), $id);
+            $food = utf8_decode($db->clearText($food));
+            $desc = utf8_decode($db->clearText($desc));
+            $bind = $stmt->bind_param("ssi", $food, $desc, $id);
 
             if (!$bind):
                 throw new Exception("La modificación del pack falló en su binding.");
@@ -210,8 +214,7 @@ class Food
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 }

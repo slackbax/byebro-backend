@@ -1,7 +1,7 @@
 <?php
 
 $_BASEDIR = explode('class', dirname(__FILE__));
-error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
+//error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
 
 if (file_exists($_BASEDIR[0] . 'src/settings.php')):
     require($_BASEDIR[0] . 'src/settings.php');
@@ -9,7 +9,7 @@ endif;
 
 class myDBC
 {
-    public $mysqli = null;
+    public ?mysqli $mysqli = null;
 
     /**
      * conectar
@@ -39,15 +39,13 @@ class myDBC
     // Prepares a SQL query
     public function Prepare($qry)
     {
-        $result = $this->mysqli->prepare($qry);
-        return $result;
+        return $this->mysqli->prepare($qry);
     }
 
     // Runs a sql query
     public function runQuery($qry)
     {
-        $result = $this->mysqli->query($qry);
-        return $result;
+        return $this->mysqli->query($qry);
     }
 
     // Turns autocommit on/off for transactions
@@ -75,7 +73,7 @@ class myDBC
     }
 
     // Escape the string get ready to insert or update
-    public function clearText($text)
+    public function clearText($text): string
     {
         return $this->mysqli->real_escape_string(trim($text));
     }

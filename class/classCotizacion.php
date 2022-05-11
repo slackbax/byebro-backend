@@ -11,7 +11,7 @@ class Cotizacion
      * @param null $db
      * @return stdClass
      */
-    public function get($id, $db = null)
+    public function get($id, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -58,7 +58,7 @@ class Cotizacion
      * @param null $db
      * @return array
      */
-    public function getAll($db = null)
+    public function getAll($db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -82,7 +82,7 @@ class Cotizacion
      * @param null $db
      * @return array
      */
-    public function getByCotizante($cot, $db = null)
+    public function getByCotizante($cot, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -110,7 +110,7 @@ class Cotizacion
      * @param null $db
      * @return array
      */
-    public function getByState($state, $db = null)
+    public function getByState($state, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -140,7 +140,7 @@ class Cotizacion
      * @param null $db
      * @return array
      */
-    public function getByStateCotizante($state, $cot, $db = null)
+    public function getByStateCotizante($state, $cot, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -169,7 +169,7 @@ class Cotizacion
      * @param null $db
      * @return stdClass
      */
-    public function getState($cot, $db = null)
+    public function getState($cot, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -199,7 +199,7 @@ class Cotizacion
      * @param null $db
      * @return stdClass
      */
-    public function getStateByID($state, $db = null)
+    public function getStateByID($state, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -233,7 +233,7 @@ class Cotizacion
      * @param null $db
      * @return array
      */
-    public function set($ci_o, $ci_d, $cot, $codigo, $f_ini, $f_ter, $link, $db = null)
+    public function set($ci_o, $ci_d, $cot, $codigo, $f_ini, $f_ter, $link, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -246,7 +246,14 @@ class Cotizacion
                 throw new Exception("La inserción de la cotización falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("iiissss", $db->clearText($ci_o), $db->clearText($ci_d), $db->clearText($cot), utf8_decode($db->clearText($codigo)), utf8_decode($db->clearText($f_ini)), utf8_decode($db->clearText($f_ter)), utf8_decode($db->clearText($link)));
+            $ci_o = $db->clearText($ci_o);
+            $ci_d = $db->clearText($ci_d);
+            $cot = $db->clearText($cot);
+            $codigo = utf8_decode($db->clearText($codigo));
+            $f_ini = utf8_decode($db->clearText($f_ini));
+            $f_ter = utf8_decode($db->clearText($f_ter));
+            $link = utf8_decode($db->clearText($link));
+            $bind = $stmt->bind_param("iiissss", $ci_o, $ci_d, $cot, $codigo, $f_ini, $f_ter, $link);
 
             if (!$bind):
                 throw new Exception("La inserción de la cotización falló en su binding.");
@@ -260,8 +267,7 @@ class Cotizacion
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -271,7 +277,7 @@ class Cotizacion
      * @param null $db
      * @return array
      */
-    public function setValue($cot, $val, $db = null)
+    public function setValue($cot, $val, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -284,7 +290,9 @@ class Cotizacion
                 throw new Exception("La actualización del valor de cotización falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("ii", $db->clearText($val), $db->clearText($cot));
+            $val = $db->clearText($val);
+            $cot = $db->clearText($cot);
+            $bind = $stmt->bind_param("ii", $val, $cot);
 
             if (!$bind):
                 throw new Exception("La actualización del valor de cotización falló en su binding.");
@@ -298,8 +306,7 @@ class Cotizacion
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -309,7 +316,7 @@ class Cotizacion
      * @param null $db
      * @return array
      */
-    public function setState($state, $cot, $db = null)
+    public function setState($state, $cot, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -322,7 +329,9 @@ class Cotizacion
                 throw new Exception("La inserción del estado de cotización falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("ii", $db->clearText($state), $db->clearText($cot));
+            $state = $db->clearText($state);
+            $cot = $db->clearText($cot);
+            $bind = $stmt->bind_param("ii", $state, $cot);
 
             if (!$bind):
                 throw new Exception("La inserción del estado de cotización falló en su binding.");
@@ -336,8 +345,7 @@ class Cotizacion
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -346,7 +354,7 @@ class Cotizacion
      * @param null $db
      * @return array
      */
-    public function setLast($cot, $db = null)
+    public function setLast($cot, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -359,7 +367,8 @@ class Cotizacion
                 throw new Exception("La actualización del estado de cotización falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("i", $db->clearText($cot));
+            $cot = $db->clearText($cot);
+            $bind = $stmt->bind_param("i", $cot);
 
             if (!$bind):
                 throw new Exception("La actualización del estado de cotización falló en su binding.");
@@ -373,8 +382,7 @@ class Cotizacion
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -385,7 +393,7 @@ class Cotizacion
      * @param null $db
      * @return array
      */
-    public function setExtra($cot, $extra, $cant, $db = null)
+    public function setExtra($cot, $extra, $cant, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -398,7 +406,10 @@ class Cotizacion
                 throw new Exception("La inserción de los extras de cotización falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("iii", $db->clearText($cot), $db->clearText($extra), $db->clearText($cant));
+            $cot = $db->clearText($cot);
+            $extra = $db->clearText($extra);
+            $cant = $db->clearText($cant);
+            $bind = $stmt->bind_param("iii", $cot, $extra, $cant);
 
             if (!$bind):
                 throw new Exception("La inserción de los extras de cotización falló en su binding.");
@@ -412,8 +423,7 @@ class Cotizacion
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 }

@@ -11,7 +11,7 @@ class Accomodation
      * @param null $db
      * @return stdClass
      */
-    public function get($id, $db = null)
+    public function get($id, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -44,13 +44,13 @@ class Accomodation
      * @param null $db
      * @return array
      */
-    public function getAll($db = null)
+    public function getAll($db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
         endif;
 
-        $stmt = $db->Prepare("SELECT alo_id FROM bb_alojamiento WHERE alo_activo = TRUE ORDER BY alo_nombre ASC");
+        $stmt = $db->Prepare("SELECT alo_id FROM bb_alojamiento WHERE alo_activo = TRUE ORDER BY alo_nombre");
         $stmt->execute();
         $result = $stmt->get_result();
         $lista = [];
@@ -68,14 +68,15 @@ class Accomodation
      * @param null $db
      * @return array
      */
-    public function getByCity($city, $db = null)
+    public function getByCity($city, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
         endif;
 
-        $stmt = $db->Prepare("SELECT alo_id FROM bb_alojamiento WHERE cid_id = ? AND alo_activo = TRUE ORDER BY alo_nombre ASC");
-        $stmt->bind_param('i', $db->clearText($city));
+        $stmt = $db->Prepare("SELECT alo_id FROM bb_alojamiento WHERE cid_id = ? AND alo_activo = TRUE ORDER BY alo_nombre");
+        $city = $db->clearText($city);
+        $stmt->bind_param('i', $city);
         $stmt->execute();
         $result = $stmt->get_result();
         $lista = [];
@@ -93,7 +94,7 @@ class Accomodation
      * @param null $db
      * @return stdClass
      */
-    public function getByTrip($tr, $db = null)
+    public function getByTrip($tr, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -103,7 +104,8 @@ class Accomodation
                                     FROM bb_alojamiento a
                                     JOIN bb_viaje v on a.alo_id = v.alo_id
                                     WHERE vi_id = ?");
-        $stmt->bind_param('i', $db->clearText($tr));
+        $tr = $db->clearText($tr);
+        $stmt->bind_param('i', $tr);
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
@@ -123,7 +125,7 @@ class Accomodation
      * @param null $db
      * @return array
      */
-    public function set($city, $name, $description, $direccion, $rooms, $baths, $db = null)
+    public function set($city, $name, $description, $direccion, $rooms, $baths, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -136,8 +138,13 @@ class Accomodation
                 throw new Exception("La inserción del alojamiento falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("isssii", $db->clearText($city), utf8_decode($db->clearText($name)), utf8_decode($db->clearText($description)), utf8_decode($db->clearText($direccion)),
-                utf8_decode($db->clearText($rooms)), utf8_decode($db->clearText($baths)));
+            $city = $db->clearText($city);
+            $name = utf8_decode($db->clearText($name));
+            $description = utf8_decode($db->clearText($description));
+            $direccion = utf8_decode($db->clearText($direccion));
+            $rooms = utf8_decode($db->clearText($rooms));
+            $baths = utf8_decode($db->clearText($baths));
+            $bind = $stmt->bind_param("isssii", $city, $name, $description, $direccion, $rooms, $baths);
 
             if (!$bind):
                 throw new Exception("La inserción del alojamiento falló en su binding.");
@@ -151,8 +158,7 @@ class Accomodation
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -162,7 +168,7 @@ class Accomodation
      * @param null $db
      * @return array
      */
-    public function setPicture($id, $pic, $db = null)
+    public function setPicture($id, $pic, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -188,8 +194,7 @@ class Accomodation
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -199,7 +204,7 @@ class Accomodation
      * @param null $db
      * @return array
      */
-    public function setState($id, $state, $db = null)
+    public function setState($id, $state, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -225,8 +230,7 @@ class Accomodation
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -241,7 +245,7 @@ class Accomodation
      * @param null $db
      * @return array
      */
-    public function mod($id, $city, $name, $description, $direccion, $rooms, $baths, $db = null)
+    public function mod($id, $city, $name, $description, $direccion, $rooms, $baths, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -254,8 +258,13 @@ class Accomodation
                 throw new Exception("La modificación del alojamiento falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("isssiii", $db->clearText($city), utf8_decode($db->clearText($name)), utf8_decode($db->clearText($description)), utf8_decode($db->clearText($direccion)),
-                utf8_decode($db->clearText($rooms)), utf8_decode($db->clearText($baths)), $id);
+            $city = $db->clearText($city);
+            $name = utf8_decode($db->clearText($name));
+            $description = utf8_decode($db->clearText($description));
+            $direccion = utf8_decode($db->clearText($direccion));
+            $rooms = utf8_decode($db->clearText($rooms));
+            $baths = utf8_decode($db->clearText($baths));
+            $bind = $stmt->bind_param("isssiii", $city, $name, $description, $direccion, $rooms, $baths, $id);
 
             if (!$bind):
                 throw new Exception("La modificación del alojamiento falló en su binding.");
@@ -269,8 +278,7 @@ class Accomodation
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 }

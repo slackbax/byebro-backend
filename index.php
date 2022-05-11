@@ -6,7 +6,6 @@
 
 <?php require 'class/classMyDBC.php' ?>
 <?php require 'src/Random/random.php' ?>
-<?php require 'class/classCounter.php' ?>
 <?php require 'src/sessionControl.php' ?>
 <?php require 'src/fn.php' ?>
 

@@ -11,7 +11,7 @@ class Personal
      * @param null $db
      * @return stdClass
      */
-    public function get($id, $db = null)
+    public function get($id, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -49,13 +49,13 @@ class Personal
      * @param null $db
      * @return array
      */
-    public function getAll($db = null)
+    public function getAll($db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
         endif;
 
-        $stmt = $db->Prepare("SELECT per_id FROM bb_personal WHERE per_activo = TRUE ORDER BY per_ap ASC, per_am ASC, per_nombres ASC");
+        $stmt = $db->Prepare("SELECT per_id FROM bb_personal WHERE per_activo = TRUE ORDER BY per_ap, per_am, per_nombres");
         $stmt->execute();
         $result = $stmt->get_result();
         $lista = [];
@@ -73,7 +73,7 @@ class Personal
      * @param null $db
      * @return array
      */
-    public function getByString($user, $db = null)
+    public function getByString($user, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -104,7 +104,7 @@ class Personal
      * @param null $db
      * @return array
      */
-    public function getByCity($id, $db = null)
+    public function getByCity($id, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -132,7 +132,7 @@ class Personal
      * @param null $db
      * @return array
      */
-    public function getCities($id, $db = null)
+    public function getCities($id, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -164,7 +164,7 @@ class Personal
      * @param null $db
      * @return array
      */
-    public function getByViaje($id, $db = null)
+    public function getByViaje($id, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -228,7 +228,7 @@ class Personal
      * @param null $db
      * @return array
      */
-    public function set($name, $ap, $am, $email, $phone, $db = null)
+    public function set($name, $ap, $am, $email, $phone, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -241,7 +241,12 @@ class Personal
                 throw new Exception("La inserción del usuario falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("sssss", utf8_decode($db->clearText($name)), utf8_decode($db->clearText($ap)), utf8_decode($db->clearText($am)), utf8_decode($db->clearText($phone)), utf8_decode($db->clearText($email)));
+            $name = utf8_decode($db->clearText($name));
+            $ap = utf8_decode($db->clearText($ap));
+            $am = utf8_decode($db->clearText($am));
+            $phone = utf8_decode($db->clearText($phone));
+            $email = utf8_decode($db->clearText($email));
+            $bind = $stmt->bind_param("sssss", $name, $ap, $am, $phone, $email);
 
             if (!$bind):
                 throw new Exception("La inserción del usuario falló en su binding.");
@@ -255,8 +260,7 @@ class Personal
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -266,7 +270,7 @@ class Personal
      * @param null $db
      * @return array
      */
-    public function setUser($id, $user, $db = null)
+    public function setUser($id, $user, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -279,7 +283,9 @@ class Personal
                 throw new Exception("La inserción del usuario del personal falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("ii", $db->clearText($id), $db->clearText($user));
+            $id = $db->clearText($id);
+            $user = $db->clearText($user);
+            $bind = $stmt->bind_param("ii", $id, $user);
 
             if (!$bind):
                 throw new Exception("La inserción del usuario del personal falló en su binding.");
@@ -293,8 +299,7 @@ class Personal
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -304,7 +309,7 @@ class Personal
      * @param null $db
      * @return array
      */
-    public function setState($id, $state, $db = null)
+    public function setState($id, $state, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -317,7 +322,9 @@ class Personal
                 throw new Exception("La actualización del personal falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("ii", $db->clearText($state), $db->clearText($id));
+            $state = $db->clearText($state);
+            $id = $db->clearText($id);
+            $bind = $stmt->bind_param("ii", $state, $id);
 
             if (!$bind):
                 throw new Exception("La actualización del personal falló en su binding.");
@@ -331,8 +338,7 @@ class Personal
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -342,7 +348,7 @@ class Personal
      * @param null $db
      * @return array
      */
-    public function setCity($id, $city, $db = null)
+    public function setCity($id, $city, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -355,7 +361,9 @@ class Personal
                 throw new Exception("La inserción de la ciudad del personal falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("ii", $db->clearText($id), $db->clearText($city));
+            $id = $db->clearText($id);
+            $city = $db->clearText($city);
+            $bind = $stmt->bind_param("ii", $id, $city);
 
             if (!$bind):
                 throw new Exception("La inserción de la ciudad del personal falló en su binding.");
@@ -369,8 +377,7 @@ class Personal
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -381,7 +388,7 @@ class Personal
      * @param null $db
      * @return array
      */
-    public function setViaje($id, $vi, $cargo, $db = null)
+    public function setViaje($id, $vi, $cargo, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -394,7 +401,10 @@ class Personal
                 throw new Exception("La inserción del staff falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("iii", $db->clearText($cargo), $db->clearText($vi), $db->clearText($id));
+            $cargo = $db->clearText($cargo);
+            $vi = $db->clearText($vi);
+            $id = $db->clearText($id);
+            $bind = $stmt->bind_param("iii", $cargo, $vi, $id);
 
             if (!$bind):
                 throw new Exception("La inserción del staff falló en su binding.");
@@ -408,8 +418,7 @@ class Personal
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -423,7 +432,7 @@ class Personal
      * @param null $db
      * @return array
      */
-    public function mod($id, $name, $ap, $am, $email, $phone, $db = null)
+    public function mod($id, $name, $ap, $am, $email, $phone, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -436,7 +445,12 @@ class Personal
                 throw new Exception("La modificación del usuario falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("sssssi", utf8_decode($db->clearText($name)), utf8_decode($db->clearText($ap)), utf8_decode($db->clearText($am)), utf8_decode($db->clearText($phone)), utf8_decode($db->clearText($email)), $id);
+            $name = utf8_decode($db->clearText($name));
+            $ap = utf8_decode($db->clearText($ap));
+            $am = utf8_decode($db->clearText($am));
+            $phone = utf8_decode($db->clearText($phone));
+            $email = utf8_decode($db->clearText($email));
+            $bind = $stmt->bind_param("sssssi", $name, $ap, $am, $phone, $email, $id);
 
             if (!$bind):
                 throw new Exception("La modificación del usuario falló en su binding.");
@@ -450,8 +464,7 @@ class Personal
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -461,7 +474,7 @@ class Personal
      * @param null $db
      * @return array
      */
-    public function modUser($id, $user, $db = null)
+    public function modUser($id, $user, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -474,7 +487,9 @@ class Personal
                 throw new Exception("La modificación del usuario del personal falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("ii", $db->clearText($id), $db->clearText($user));
+            $id = $db->clearText($id);
+            $user = $db->clearText($user);
+            $bind = $stmt->bind_param("ii", $id, $user);
 
             if (!$bind):
                 throw new Exception("La modificación del usuario del personal falló en su binding.");
@@ -488,8 +503,7 @@ class Personal
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -498,7 +512,7 @@ class Personal
      * @param null $db
      * @return array
      */
-    public function delCities($id, $db = null)
+    public function delCities($id, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -511,7 +525,8 @@ class Personal
                 throw new Exception("La eliminación de las ciudades del personal falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("i", $db->clearText($id));
+            $id = $db->clearText($id);
+            $bind = $stmt->bind_param("i", $id);
 
             if (!$bind):
                 throw new Exception("La eliminación de las ciudades del usuario del personal falló en su binding.");
@@ -525,8 +540,7 @@ class Personal
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 }

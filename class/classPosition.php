@@ -11,7 +11,7 @@ class Position
      * @param null $db
      * @return stdClass
      */
-    public function get($id, $db = null)
+    public function get($id, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -36,13 +36,13 @@ class Position
      * @param null $db
      * @return array
      */
-    public function getAll($db = null)
+    public function getAll($db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
         endif;
 
-        $stmt = $db->Prepare("SELECT car_id FROM bb_cargo ORDER BY car_nombre ASC");
+        $stmt = $db->Prepare("SELECT car_id FROM bb_cargo ORDER BY car_nombre");
         $stmt->execute();
         $result = $stmt->get_result();
         $lista = [];
@@ -60,7 +60,7 @@ class Position
      * @param null $db
      * @return array
      */
-    public function existsPosition($position, $db = null)
+    public function existsPosition($position, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -73,7 +73,8 @@ class Position
                 throw new Exception("La búsqueda del cargo falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("s", $db->clearText($position));
+            $position = $db->clearText($position);
+            $bind = $stmt->bind_param("s", $position);
             if (!$bind):
                 throw new Exception("La búsqueda del cargo falló en su binding.");
             endif;
@@ -94,8 +95,7 @@ class Position
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -105,7 +105,7 @@ class Position
      * @param null $db
      * @return array
      */
-    public function set($position, $desc, $db = null)
+    public function set($position, $desc, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -118,7 +118,9 @@ class Position
                 throw new Exception("La inserción del cargo falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("ss", utf8_decode($db->clearText($position)), utf8_decode($db->clearText($desc)));
+            $position = utf8_decode($db->clearText($position));
+            $desc = utf8_decode($db->clearText($desc));
+            $bind = $stmt->bind_param("ss", $position, $desc);
 
             if (!$bind):
                 throw new Exception("La inserción del cargo falló en su binding.");
@@ -132,8 +134,7 @@ class Position
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -144,7 +145,7 @@ class Position
      * @param null $db
      * @return array
      */
-    public function mod($id, $position, $desc, $db = null)
+    public function mod($id, $position, $desc, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -157,7 +158,9 @@ class Position
                 throw new Exception("La modificación del cargo falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("ssi", utf8_decode($db->clearText($position)), utf8_decode($db->clearText($desc)), $id);
+            $position = utf8_decode($db->clearText($position));
+            $desc = utf8_decode($db->clearText($desc));
+            $bind = $stmt->bind_param("ssi", $position, $desc, $id);
 
             if (!$bind):
                 throw new Exception("La modificación del cargo falló en su binding.");
@@ -171,8 +174,7 @@ class Position
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 }

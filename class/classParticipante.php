@@ -11,7 +11,7 @@ class Participante
      * @param null $db
      * @return stdClass
      */
-    public function get($id, $db = null)
+    public function get($id, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -52,7 +52,7 @@ class Participante
      * @param null $db
      * @return array
      */
-    public function getAll($db = null)
+    public function getAll($db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -76,7 +76,7 @@ class Participante
      * @param null $db
      * @return array
      */
-    public function getByCotizacion($cot, $db = null)
+    public function getByCotizacion($cot, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -104,7 +104,7 @@ class Participante
      * @param null $db
      * @return array
      */
-    public function getByViaje($cot, $db = null)
+    public function getByViaje($cot, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -135,7 +135,7 @@ class Participante
      * @param null $db
      * @return stdClass
      */
-    public function getByRutCotizacion($cot, $rut, $db = null)
+    public function getByRutCotizacion($cot, $rut, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -171,7 +171,7 @@ class Participante
      * @param null $db
      * @return stdClass
      */
-    public function getByCode($code, $db = null)
+    public function getByCode($code, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -207,7 +207,7 @@ class Participante
      * @param null $db
      * @return array
      */
-    public function set($cot, $rut, $name, $ap, $am, $edad, $email, $phone, $cargo, $cotiza, $viaje, $db = null)
+    public function set($cot, $rut, $name, $ap, $am, $edad, $email, $phone, $cargo, $cotiza, $viaje, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -220,8 +220,15 @@ class Participante
                 throw new Exception("La inserción del participante falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("issssississ", $db->clearText($cot), utf8_decode($db->clearText($rut)), utf8_decode($db->clearText($name)), utf8_decode($db->clearText($ap)),
-                utf8_decode($db->clearText($am)), $db->clearText($edad), utf8_decode($db->clearText(mb_strtolower($email))), utf8_decode($db->clearText($phone)), $cargo, $cotiza, $viaje);
+            $cot = $db->clearText($cot);
+            $rut = utf8_decode($db->clearText($rut));
+            $name = utf8_decode($db->clearText($name));
+            $ap = utf8_decode($db->clearText($ap));
+            $am = utf8_decode($db->clearText($am));
+            $edad = $db->clearText($edad);
+            $email = utf8_decode($db->clearText(mb_strtolower($email)));
+            $phone = utf8_decode($db->clearText($phone));
+            $bind = $stmt->bind_param("issssississ", $cot, $rut, $name, $ap, $am, $edad, $email, $phone, $cargo, $cotiza, $viaje);
 
             if (!$bind):
                 throw new Exception("La inserción del participante falló en su binding.");
@@ -235,8 +242,7 @@ class Participante
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -247,7 +253,7 @@ class Participante
      * @param null $db
      * @return array
      */
-    public function setQuota($id, $cuota, $codigo, $db = null)
+    public function setQuota($id, $cuota, $codigo, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -260,7 +266,8 @@ class Participante
                 throw new Exception("La inserción de la cuota falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("sii", $codigo, $db->clearText($cuota), $id);
+            $cuota = $db->clearText($cuota);
+            $bind = $stmt->bind_param("sii", $codigo, $cuota, $id);
 
             if (!$bind):
                 throw new Exception("La inserción de la cuota falló en su binding.");
@@ -274,8 +281,7 @@ class Participante
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -284,7 +290,8 @@ class Participante
      * @param null $db
      * @return array
      */
-    public function setPago($id, $db = null) {
+    public function setPago($id, $db = null): array
+    {
         if (is_null($db)):
             $db = new myDBC();
         endif;
@@ -310,8 +317,7 @@ class Participante
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -328,7 +334,7 @@ class Participante
      * @param null $db
      * @return array
      */
-    public function mod($id, $rut, $name, $ap, $am, $edad, $email, $phone, $viaje, $db = null)
+    public function mod($id, $rut, $name, $ap, $am, $edad, $email, $phone, $viaje, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -341,8 +347,14 @@ class Participante
                 throw new Exception("La modificación del participante falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("ssssissii", utf8_decode($db->clearText($rut)), utf8_decode($db->clearText($name)), utf8_decode($db->clearText($ap)),
-                utf8_decode($db->clearText($am)), $db->clearText($edad), utf8_decode($db->clearText(mb_strtolower($email))), utf8_decode($db->clearText($phone)), $viaje, $id);
+            $rut = utf8_decode($db->clearText($rut));
+            $name = utf8_decode($db->clearText($name));
+            $ap = utf8_decode($db->clearText($ap));
+            $am = utf8_decode($db->clearText($am));
+            $edad = $db->clearText($edad);
+            $email = utf8_decode($db->clearText(mb_strtolower($email)));
+            $phone = utf8_decode($db->clearText($phone));
+            $bind = $stmt->bind_param("ssssissii", $rut, $name, $ap, $am, $edad, $email, $phone, $viaje, $id);
 
             if (!$bind):
                 throw new Exception("La modificación del participante falló en su binding.");
@@ -356,8 +368,7 @@ class Participante
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 }

@@ -11,7 +11,7 @@ class Viaje
      * @param null $db
      * @return stdClass
      */
-    public function get($id, $db = null)
+    public function get($id, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -59,7 +59,7 @@ class Viaje
      * @param null $db
      * @return array
      */
-    public function getAll($db = null)
+    public function getAll($db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -83,7 +83,7 @@ class Viaje
      * @param null $db
      * @return stdClass
      */
-    public function getByCotizacion($cot, $db = null)
+    public function getByCotizacion($cot, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -108,7 +108,7 @@ class Viaje
      * @param null $db
      * @return array
      */
-    public function getByState($state, $db = null)
+    public function getByState($state, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -138,7 +138,7 @@ class Viaje
      * @param null $db
      * @return array
      */
-    public function getByStateCotizante($state, $cot, $db = null)
+    public function getByStateCotizante($state, $cot, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -168,7 +168,7 @@ class Viaje
      * @param null $db
      * @return stdClass
      */
-    public function getState($vi, $db = null)
+    public function getState($vi, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -198,7 +198,7 @@ class Viaje
      * @param null $db
      * @return stdClass
      */
-    public function getStateByID($state, $db = null)
+    public function getStateByID($state, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -233,7 +233,7 @@ class Viaje
      * @param null $db
      * @return array
      */
-    public function set($ci_o, $ci_d, $alo, $cot, $codigo, $valor, $f_ini, $f_ter, $db = null)
+    public function set($ci_o, $ci_d, $alo, $cot, $codigo, $valor, $f_ini, $f_ter, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -246,8 +246,15 @@ class Viaje
                 throw new Exception("La inserción del viaje falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("iiiisiss", $db->clearText($ci_o), $db->clearText($ci_d), $db->clearText($alo), $db->clearText($cot), utf8_decode($db->clearText($codigo)), $db->clearText($valor),
-                utf8_decode($db->clearText($f_ini)), utf8_decode($db->clearText($f_ter)));
+            $ci_o = $db->clearText($ci_o);
+            $ci_d = $db->clearText($ci_d);
+            $alo = $db->clearText($alo);
+            $cot = $db->clearText($cot);
+            $codigo = utf8_decode($db->clearText($codigo));
+            $valor = $db->clearText($valor);
+            $f_ini = utf8_decode($db->clearText($f_ini));
+            $f_ter = utf8_decode($db->clearText($f_ter));
+            $bind = $stmt->bind_param("iiiisiss", $ci_o, $ci_d, $alo, $cot, $codigo, $valor, $f_ini, $f_ter);
 
             if (!$bind):
                 throw new Exception("La inserción del viaje falló en su binding.");
@@ -261,8 +268,7 @@ class Viaje
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -272,7 +278,7 @@ class Viaje
      * @param null $db
      * @return array
      */
-    public function setValue($vi, $val, $db = null)
+    public function setValue($vi, $val, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -285,7 +291,9 @@ class Viaje
                 throw new Exception("La actualización del valor de viaje falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("ii", $db->clearText($val), $db->clearText($vi));
+            $val = $db->clearText($val);
+            $vi = $db->clearText($vi);
+            $bind = $stmt->bind_param("ii", $val, $vi);
 
             if (!$bind):
                 throw new Exception("La actualización del valor de viaje falló en su binding.");
@@ -299,8 +307,7 @@ class Viaje
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -310,7 +317,7 @@ class Viaje
      * @param null $db
      * @return array
      */
-    public function setState($state, $vi, $db = null)
+    public function setState($state, $vi, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -323,7 +330,9 @@ class Viaje
                 throw new Exception("La inserción del estado de viaje falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("ii", $db->clearText($state), $db->clearText($vi));
+            $state = $db->clearText($state);
+            $vi = $db->clearText($vi);
+            $bind = $stmt->bind_param("ii", $state, $vi);
 
             if (!$bind):
                 throw new Exception("La inserción del estado de viaje falló en su binding.");
@@ -337,8 +346,7 @@ class Viaje
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -347,7 +355,7 @@ class Viaje
      * @param null $db
      * @return array
      */
-    public function setLast($vi, $db = null)
+    public function setLast($vi, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -360,7 +368,8 @@ class Viaje
                 throw new Exception("La actualización del estado de viaje falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("i", $db->clearText($vi));
+            $vi = $db->clearText($vi);
+            $bind = $stmt->bind_param("i", $vi);
 
             if (!$bind):
                 throw new Exception("La actualización del estado de viaje falló en su binding.");
@@ -374,8 +383,7 @@ class Viaje
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -386,7 +394,7 @@ class Viaje
      * @param null $db
      * @return array
      */
-    public function setExtra($vi, $extra, $cant, $db = null)
+    public function setExtra($vi, $extra, $cant, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -399,7 +407,10 @@ class Viaje
                 throw new Exception("La inserción de los extras de viaje falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("iii", $db->clearText($vi), $db->clearText($extra), $db->clearText($cant));
+            $vi = $db->clearText($vi);
+            $extra = $db->clearText($extra);
+            $cant = $db->clearText($cant);
+            $bind = $stmt->bind_param("iii", $vi, $extra, $cant);
 
             if (!$bind):
                 throw new Exception("La inserción de los extras de viaje falló en su binding.");
@@ -413,8 +424,7 @@ class Viaje
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 }

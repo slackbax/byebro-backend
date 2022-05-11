@@ -11,7 +11,7 @@ class Profile
      * @param null $db
      * @return stdClass
      */
-    public function get($id, $db = null)
+    public function get($id, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -35,13 +35,13 @@ class Profile
      * @param null $db
      * @return array
      */
-    public function getAll($db = null)
+    public function getAll($db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
         endif;
 
-        $stmt = $db->Prepare("SELECT perf_id FROM bb_perfil ORDER BY perf_descripcion ASC");
+        $stmt = $db->Prepare("SELECT perf_id FROM bb_perfil ORDER BY perf_descripcion");
         $stmt->execute();
         $result = $stmt->get_result();
         $lista = [];

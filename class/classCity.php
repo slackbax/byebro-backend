@@ -12,7 +12,7 @@ class City
      * @param null $db
      * @return stdClass
      */
-    public function get($id, $type, $db = null)
+    public function get($id, $type, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -54,16 +54,16 @@ class City
      * @param null $db
      * @return array
      */
-    public function getAll($type, $db = null)
+    public function getAll($type, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
         endif;
 
         if ($type == 'o'):
-            $stmt = $db->Prepare("SELECT cio_id FROM bb_ciudad_origen WHERE cio_activo IS TRUE ORDER BY cio_nombre ASC");
+            $stmt = $db->Prepare("SELECT cio_id FROM bb_ciudad_origen WHERE cio_activo IS TRUE ORDER BY cio_nombre");
         else:
-            $stmt = $db->Prepare("SELECT cid_id FROM bb_ciudad_destino WHERE cid_activo IS TRUE ORDER BY cid_nombre ASC");
+            $stmt = $db->Prepare("SELECT cid_id FROM bb_ciudad_destino WHERE cid_activo IS TRUE ORDER BY cid_nombre");
         endif;
 
         $stmt->execute();
@@ -90,7 +90,7 @@ class City
      * @param null $db
      * @return array
      */
-    public function existsCity($city, $type, $db = null)
+    public function existsCity($city, $type, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -107,7 +107,8 @@ class City
                 throw new Exception("La búsqueda de la ciudad falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("s", $db->clearText($city));
+            $city = $db->clearText($city);
+            $bind = $stmt->bind_param("s", $city);
             if (!$bind):
                 throw new Exception("La búsqueda de la ciudad falló en su binding.");
             endif;
@@ -128,8 +129,7 @@ class City
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -141,7 +141,7 @@ class City
      * @param null $db
      * @return array
      */
-    public function set($city, $code, $pais, $type, $db = null)
+    public function set($city, $code, $pais, $type, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -158,7 +158,10 @@ class City
                 throw new Exception("La inserción de la ciudad falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("sss", utf8_decode($db->clearText($city)), utf8_decode($db->clearText($code)), utf8_decode($db->clearText($pais)));
+            $city = utf8_decode($db->clearText($city));
+            $code = utf8_decode($db->clearText($code));
+            $pais = utf8_decode($db->clearText($pais));
+            $bind = $stmt->bind_param("sss", $city, $code, $pais);
 
             if (!$bind):
                 throw new Exception("La inserción de la ciudad falló en su binding.");
@@ -172,8 +175,7 @@ class City
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -184,7 +186,7 @@ class City
      * @param null $db
      * @return array
      */
-    public function setState($id, $type, $state, $db = null)
+    public function setState($id, $type, $state, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -201,7 +203,9 @@ class City
                 throw new Exception("La actualización de la ciudad falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("ii", $db->clearText($state), $db->clearText($id));
+            $state = $db->clearText($state);
+            $id = $db->clearText($id);
+            $bind = $stmt->bind_param("ii", $state, $id);
 
             if (!$bind):
                 throw new Exception("La actualización de la ciudad falló en su binding.");
@@ -215,8 +219,7 @@ class City
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -229,7 +232,7 @@ class City
      * @param null $db
      * @return array
      */
-    public function mod($id, $city, $code, $pais, $type, $db = null)
+    public function mod($id, $city, $code, $pais, $type, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -246,7 +249,10 @@ class City
                 throw new Exception("La modificación de la ciudad falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("sssi", utf8_decode($db->clearText($city)), utf8_decode($db->clearText($code)), utf8_decode($db->clearText($pais)), $id);
+            $city = utf8_decode($db->clearText($city));
+            $code = utf8_decode($db->clearText($code));
+            $pais = utf8_decode($db->clearText($pais));
+            $bind = $stmt->bind_param("sssi", $city, $code, $pais, $id);
 
             if (!$bind):
                 throw new Exception("La modificación de la ciudad falló en su binding.");
@@ -260,8 +266,7 @@ class City
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 }

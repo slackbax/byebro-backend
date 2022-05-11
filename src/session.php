@@ -3,7 +3,6 @@
 session_start();
 include '../class/classMyDBC.php';
 include '../class/classSession.php';
-include '../class/classCounter.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -133,46 +132,7 @@ try {
     $set_last = $ses->setLast($q_data['us_id'], $qr);
     $set_session = $ses->set($q_data['us_id'], $_SERVER['REMOTE_ADDR'], $qr);
 
-    //$q_ip = $ses->getCount($q_data['us_id'], $qr);
-    //$q_ipcur = $ses->getCountIP($q_data['us_id'], $_SERVER['REMOTE_ADDR'], $qr);
-    /*
-    $tolerance = $q_ipcur / $q_ip;
-
-    if ($tolerance < 0.05):
-        $mail = new PHPMailer(true);
-
-        $mail->IsSMTP();                            // telling the class to use SMTP
-        $mail->SMTPDebug = 0;                        // enables SMTP debug information (for testing)
-        $mail->SMTPAuth = true;                    // enable SMTP authentication
-        $mail->SMTPSecure = "ssl";                    // sets the prefix to the servier
-        $mail->Host = "smtp.gmail.com";            // sets GMAIL as the SMTP server
-        $mail->Port = 465;                        // set the SMTP port for the GMAIL server
-        $mail->Username = "ti.hggb@gmail.com";    // GMAIL username
-        $mail->Password = "svr1503_root";           // GMAIL password
-
-        $mail->SetFrom('soportedesarrollo@ssconcepcion.cl', 'Sistema De Gestion Documental');
-
-        $mail->Subject = "Aviso de ingreso";
-        $mail->AltBody = "Para visualizar el mensaje, por favor utilice un visor de correos compatible con HTML!"; // optional, comment out and test
-
-        $html = "Estimado usuario:<br><br>Se ha hecho un ingreso a la Plataforma SISGDOC el " . date('d-m-Y') . " a las ". date('H:i') ." en IP ".  $_SERVER['REMOTE_ADDR'] . " usando sus datos de acceso, desde un lugar que no coincide con sus ingresos habituales.";
-        $html .= "<br>Si este ingreso no fue realizado por usted, le recomendamos que cambie su contraseña dentro de la plataforma, usando el menu de usuario emergente";
-        $html .= " al posicionar el cursor sobre su nombre en la esquina superior derecha, a un costado del boton de inicio.";
-        $html .= "<br><br>Saludos cordiales,";
-        $html .= "<br>Soporte Plataforma SISGDOC";
-        $mail->MsgHTML(utf8_decode($html));
-
-        $mail->AddAddress($q_data['us_email'], utf8_decode($q_data['us_nombres'] . ' ' . $q_data['us_ap']));
-
-        if (!$mail->Send()):
-            throw new Exception('Error al enviar correo de consulta. ' . $mail->ErrorInfo);
-        endif;
-    endif;
-    */
-
     if ($set_session):
-        //$c = new Counter();
-        //$count = $c->set();
         echo "true";
         return;
     else:

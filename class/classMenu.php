@@ -9,7 +9,8 @@ class Menu {
 	 * @param $id
 	 * @return stdClass
 	 */
-	public function get($id) {
+	public function get($id): stdClass
+    {
 		$db = new myDBC();
 		$stmt = $db->Prepare("SELECT * FROM bb_menu WHERE men_id = ?");
 
@@ -34,9 +35,10 @@ class Menu {
 	/**
 	 * @return array
 	 */
-	public function getAll() {
+	public function getAll(): array
+    {
 		$db = new myDBC();
-		$stmt = $db->Prepare("SELECT * FROM bb_menu WHERE men_publicado = TRUE ORDER BY men_id ASC");
+		$stmt = $db->Prepare("SELECT * FROM bb_menu WHERE men_publicado = TRUE ORDER BY men_id");
 
 		$stmt->execute();
 		$result = $stmt->get_result();
@@ -54,7 +56,8 @@ class Menu {
 	 * @param $pro
 	 * @return array
 	 */
-	public function getByProfile($pro) {
+	public function getByProfile($pro): array
+    {
 		$db = new myDBC();
 		$stmt = $db->Prepare("SELECT * FROM bb_menu m 
                                     JOIN bb_menu_perfil mp ON m.men_id = mp.men_id 
@@ -78,7 +81,8 @@ class Menu {
 	 * @param $pro
 	 * @return array
 	 */
-	public function getChildByProfile($id, $pro) {
+	public function getChildByProfile($id, $pro): array
+    {
 		$db = new myDBC();
 		$stmt = $db->Prepare("SELECT * FROM bb_menu m
                                     JOIN bb_menu_perfil mp ON m.men_id = mp.men_id 

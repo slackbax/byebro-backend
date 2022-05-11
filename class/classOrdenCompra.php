@@ -11,7 +11,7 @@ class OrdenCompra
      * @param null $db
      * @return stdClass
      */
-    public function get($id, $db = null)
+    public function get($id, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -38,7 +38,7 @@ class OrdenCompra
      * @param null $db
      * @return array
      */
-    public function getAll($db = null)
+    public function getAll($db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -62,7 +62,7 @@ class OrdenCompra
      * @param null $db
      * @return array
      */
-    public function set($par, $db = null)
+    public function set($par, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -75,7 +75,8 @@ class OrdenCompra
                 throw new Exception("La inserción de la OC falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("i", $db->clearText($par));
+            $par = $db->clearText($par);
+            $bind = $stmt->bind_param("i", $par);
 
             if (!$bind):
                 throw new Exception("La inserción de la OC falló en su binding.");
@@ -89,8 +90,7 @@ class OrdenCompra
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -107,7 +107,7 @@ class OrdenCompra
      * @param null $db
      * @return array
      */
-    public function mod($oc, $flow, $medio, $monto, $fee, $balance, $transfer, $pago, $estado, $db = null)
+    public function mod($oc, $flow, $medio, $monto, $fee, $balance, $transfer, $pago, $estado, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -120,8 +120,15 @@ class OrdenCompra
                 throw new Exception("La modificación de la OC falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("isiiissii", $db->clearText($flow), utf8_decode($db->clearText($medio)),
-                $db->clearText($monto), $db->clearText($fee), $db->clearText($balance), $db->clearText($transfer), $db->clearText($pago), $db->clearText($estado), $oc);
+            $flow = $db->clearText($flow);
+            $medio = utf8_decode($db->clearText($medio));
+            $monto = $db->clearText($monto);
+            $fee = $db->clearText($fee);
+            $balance = $db->clearText($balance);
+            $transfer = $db->clearText($transfer);
+            $pago = $db->clearText($pago);
+            $estado = $db->clearText($estado);
+            $bind = $stmt->bind_param("isiiissii", $flow, $medio, $monto, $fee, $balance, $transfer, $pago, $estado, $oc);
 
             if (!$bind):
                 throw new Exception("La modificación de la OC falló en su binding.");
@@ -135,8 +142,7 @@ class OrdenCompra
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 }

@@ -11,7 +11,7 @@ class Cotizante
      * @param null $db
      * @return stdClass
      */
-    public function get($id, $db = null)
+    public function get($id, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -46,7 +46,7 @@ class Cotizante
      * @param null $db
      * @return array
      */
-    public function getAll($db = null)
+    public function getAll($db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -70,7 +70,7 @@ class Cotizante
      * @param null $db
      * @return stdClass
      */
-    public function getByRut($rut, $db = null)
+    public function getByRut($rut, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -92,7 +92,7 @@ class Cotizante
      * @param null $db
      * @return stdClass
      */
-    public function getByUser($user, $db = null)
+    public function getByUser($user, $db = null): stdClass
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -120,7 +120,7 @@ class Cotizante
      * @param null $db
      * @return array
      */
-    public function set($user, $rut, $name, $ap, $am, $email, $phone, $db = null)
+    public function set($user, $rut, $name, $ap, $am, $email, $phone, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
@@ -133,8 +133,14 @@ class Cotizante
                 throw new Exception("La inserción del cotizante falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("issssss", $db->clearText($user), utf8_decode($db->clearText($rut)), utf8_decode($db->clearText($name)), utf8_decode($db->clearText($ap)),
-                utf8_decode($db->clearText($am)), utf8_decode($db->clearText($phone)), utf8_decode($db->clearText($email)));
+            $user = $db->clearText($user);
+            $rut = utf8_decode($db->clearText($rut));
+            $name = utf8_decode($db->clearText($name));
+            $ap = utf8_decode($db->clearText($ap));
+            $am = utf8_decode($db->clearText($am));
+            $phone = utf8_decode($db->clearText($phone));
+            $email = utf8_decode($db->clearText($email));
+            $bind = $stmt->bind_param("issssss", $user, $rut, $name, $ap, $am, $phone, $email);
 
             if (!$bind):
                 throw new Exception("La inserción del cotizante falló en su binding.");
@@ -148,8 +154,7 @@ class Cotizante
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 
@@ -160,7 +165,8 @@ class Cotizante
      * @param null $db
      * @return array
      */
-    public function modViaje($id, $email, $phone, $db = null) {
+    public function modViaje($id, $email, $phone, $db = null): array
+    {
         if (is_null($db)):
             $db = new myDBC();
         endif;
@@ -172,7 +178,10 @@ class Cotizante
                 throw new Exception("La actualización del cotizante falló en su preparación.");
             endif;
 
-            $bind = $stmt->bind_param("ssi", utf8_decode($db->clearText($email)), utf8_decode($db->clearText($phone)), $db->clearText($id));
+            $email = utf8_decode($db->clearText($email));
+            $phone = utf8_decode($db->clearText($phone));
+            $id = $db->clearText($id);
+            $bind = $stmt->bind_param("ssi", $email, $phone, $id);
 
             if (!$bind):
                 throw new Exception("La actualización del cotizante falló en su binding.");
@@ -186,8 +195,7 @@ class Cotizante
             $stmt->close();
             return $result;
         } catch (Exception $e) {
-            $result = array('estado' => false, 'msg' => $e->getMessage());
-            return $result;
+            return array('estado' => false, 'msg' => $e->getMessage());
         }
     }
 }
