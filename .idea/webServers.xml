@@ -2,12 +2,11 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="132093b4-da33-4e49-8cfa-262b006ec51e" name="byebro" url="http://www.byebro.com/admin">
-        <fileTransfer host="104.248.216.189" port="22" privateKey="C:\Users\skybax\.ssh\mkey.ppk" accessType="SFTP" keyPair="true">
+      <webServer id="132093b4-da33-4e49-8cfa-262b006ec51e" name="byebro" url="https://www.byebro.cl/admin">
+        <fileTransfer accessType="SFTP" host="206.189.73.141" port="22" sshConfigId="d57f5d9e-2770-4cf6-8c65-f1f51b475eec" sshConfig="byebro" keyPair="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
-          <option name="port" value="22" />
         </fileTransfer>
       </webServer>
     </option>

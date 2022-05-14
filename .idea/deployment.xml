@@ -5,7 +5,14 @@
       <paths name="byebro">
         <serverdata>
           <mappings>
-            <mapping deploy="/var/www/byebro.com/html/admin" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/var/www/byebro.com/admin" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="mindset">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

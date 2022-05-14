@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpMissingFieldTypeInspection */
 
 $_BASEDIR = explode('class', dirname(__FILE__));
 //error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
@@ -9,7 +9,7 @@ endif;
 
 class myDBC
 {
-    public ?mysqli $mysqli = null;
+    public $mysqli = null;
 
     /**
      * conectar
