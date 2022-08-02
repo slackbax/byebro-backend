@@ -22,14 +22,14 @@ $columns = array(
     array('db' => 'cio_nombre', 'dt' => 1, 'field' => 'cio_nombre'),
     array('db' => 'cio_codigo', 'dt' => 2, 'field' => 'cio_codigo'),
     array('db' => 'cio_pais', 'dt' => 3, 'field' => 'cio_pais',
-        'formatter' => function ($d, $row) {
+        'formatter' => function ($d) {
             $code = $d;
             include 'rest.getCountry.php';
             return '(' . $data['alpha3Code'] . ') ' . $data['name'];
         }
     ),
     array('db' => 'cio_id', 'dt' => 4, 'field' => 'cio_id',
-        'formatter' => function ($d, $row) use ($c) {
+        'formatter' => function ($d) use ($c) {
             $ct = $c->get($d, 'o');
 
             if ($ct->cio_activo)
