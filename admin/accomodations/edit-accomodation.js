@@ -101,8 +101,8 @@ $(document).ready(function () {
     });
 
     $('#btnClear').click(function () {
-        $('#gname, #gaddr, #grooms, #gbaths, #gcity').removeClass('has-error has-success');
-        $('#iconname, #iconaddr, #iconrooms, #iconbaths').removeClass('fa-remove fa-check');
+        $('#gname, #gaddr, #grooms, #gbaths, #gbeds1p, #gbeds2p, #gpool, #gbarbs, #gcity, #gurl').removeClass('has-error has-success');
+        $('#iconname, #iconaddr, #iconrooms, #iconbaths, #iconbeds1p, #iconbeds2p, #iconpool, #iconbarbs, #iconurl').removeClass('fa-remove fa-check');
     });
 
     $('#formNewAccomodation').submit(function () {

@@ -12,9 +12,9 @@ if (extract($_POST)):
 
     try {
         $db->autoCommit(FALSE);
-        $ins = $a->mod($iid, $icity, $iname, $idetalle, $iaddr, $irooms, $ibaths, $db);
+        $ins = $a->mod($iid, $icity, $iname, $idetalle, $iaddr, $irooms, $ibaths, $ibeds1p, $ibeds2p, $ipool, $ibarb, $iurl, $db);
 
-        if ($ins['estado'] == false):
+        if (!$ins['estado']):
             throw new Exception('Error al guardar los datos del alojamiento. ' . $ins['msg'], 0);
         endif;
 

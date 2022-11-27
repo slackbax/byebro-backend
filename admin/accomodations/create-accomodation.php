@@ -57,6 +57,32 @@
                         <input type="text" class="form-control" id="iNbaths" name="ibaths" placeholder="Ingresa número de habitaciones del alojamiento" required>
                         <i class="fa form-control-feedback" id="iconbaths"></i>
                     </div>
+
+                    <div class="form-group col-md-4 col-lg-3 has-feedback" id="gbeds1p">
+                        <label class="control-label" for="ibeds1p">Número de camas 1P *</label>
+                        <input type="text" class="form-control" id="iNbeds1p" name="ibeds1p" placeholder="Ingresa número de camas de una plaza del alojamiento" required>
+                        <i class="fa form-control-feedback" id="iconbeds1p"></i>
+                    </div>
+
+                    <div class="form-group col-md-4 col-lg-3 has-feedback" id="gbeds2p">
+                        <label class="control-label" for="ibeds2p">Número de camas 2P *</label>
+                        <input type="text" class="form-control" id="iNbeds2p" name="ibeds2p" placeholder="Ingresa número de camas de dos plazas del alojamiento" required>
+                        <i class="fa form-control-feedback" id="iconbeds2p"></i>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-4 col-lg-3 has-feedback" id="gpool">
+                        <label class="control-label" for="ipool">Número de piscinas *</label>
+                        <input type="text" class="form-control" id="iNpool" name="ipool" placeholder="Ingresa número de piscinas del alojamiento" required>
+                        <i class="fa form-control-feedback" id="iconpool"></i>
+                    </div>
+
+                    <div class="form-group col-md-4 col-lg-3 has-feedback" id="gbarbs">
+                        <label class="control-label" for="ibarbs">Número de quinchos *</label>
+                        <input type="text" class="form-control" id="iNbarbs" name="ibarbs" placeholder="Ingresa número de quinchos del alojamiento" required>
+                        <i class="fa form-control-feedback" id="iconbarbs"></i>
+                    </div>
                 </div>
 
                 <div class="row">
@@ -69,6 +95,14 @@
                                 <option value="<?php echo $v->cid_id ?>"><?php echo $v->cid_nombre ?></option>
                             <?php endforeach ?>
                         </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-12 col-lg-6 has-feedback" id="gurl">
+                        <label class="control-label" for="iurl">URL Google maps *</label>
+                        <input type="text" class="form-control" id="iNurl" name="iurl" placeholder="Ingresa ubicación Google Maps del alojamiento" required>
+                        <i class="fa form-control-feedback" id="iconurl"></i>
                     </div>
                 </div>
 

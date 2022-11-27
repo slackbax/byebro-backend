@@ -78,7 +78,9 @@ $columns = array(
             $string = '';
 
             $string .= '<button id="det_' . $d . '" class="quotDetails btn btn-xs btn-info" data-toggle="modal" data-target="#modal-details" data-tooltip="tooltip" data-placement="top" title="Ver detalles"><i class="fa fa-search-plus"></i></button>';
-            $string .= ' <button id="cert_' . $d . '" class="quotCert btn btn-xs btn-info" data-tooltip="tooltip" data-placement="top" title="Descargar comprobante"><i class="fa fa-cloud-download"></i></button>';
+
+            if ($ces->ces_id == 1 and $c->cot_valor != '')
+                $string .= ' <a id="edit_' . $d . '" class="quotEdit btn btn-xs btn-success" href="index.php?section=quotations&sbs=editquotation&id=' . $d . '" data-tooltip="tooltip" data-placement="top" title="Editar"><i class="fa fa-pencil"></i></a>';
 
             if ($_admin):
                 if ($ces->ces_id != 2 and $ces->ces_id != 4)

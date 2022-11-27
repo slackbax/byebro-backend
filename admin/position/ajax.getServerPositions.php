@@ -19,7 +19,7 @@ $columns = array(
     array('db' => 'car_nombre', 'dt' => 1, 'field' => 'car_nombre'),
     array('db' => 'car_descripcion', 'dt' => 2, 'field' => 'car_descripcion'),
     array('db' => 'car_id', 'dt' => 3, 'field' => 'car_id',
-        'formatter' => function ($d, $row) use ($us) {
+        'formatter' => function ($d, $row) {
             $string = '<a class="positionEdit btn btn-xs btn-info" href="index.php?section=personal&sbs=editposition&id=' . $d . '" data-tooltip="tooltip" data-placement="top" title="Editar"><i class="fa fa-pencil"></i></a>';
 
             return $string;

@@ -30,9 +30,14 @@ class Accomodation
         $obj->alo_nombre = utf8_encode($row['alo_nombre']);
         $obj->alo_rooms = $row['alo_rooms'];
         $obj->alo_baths = $row['alo_baths'];
+        $obj->alo_beds1p = $row['alo_beds_1p'];
+        $obj->alo_beds2p = $row['alo_beds_2p'];
+        $obj->alo_pool = $row['alo_pool'];
+        $obj->alo_barbecue = $row['alo_barbecue'];
         $obj->alo_descripcion = utf8_encode($row['alo_descripcion']);
         $obj->alo_direccion = utf8_encode($row['alo_direccion']);
         $obj->alo_pic = $row['alo_pic'];
+        $obj->alo_url = $row['alo_url'];
         $obj->alo_registro = $row['alo_registro'];
         $obj->alo_activo = $row['alo_activo'];
 
@@ -122,17 +127,23 @@ class Accomodation
      * @param $direccion
      * @param $rooms
      * @param $baths
-     * @param null $db
+     * @param $beds1p
+     * @param $beds2p
+     * @param $pool
+     * @param $barb
+     * @param $url
+     * @param $db
      * @return array
      */
-    public function set($city, $name, $description, $direccion, $rooms, $baths, $db = null): array
+    public function set($city, $name, $description, $direccion, $rooms, $baths, $beds1p, $beds2p, $pool, $barb, $url, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
         endif;
 
         try {
-            $stmt = $db->Prepare("INSERT INTO bb_alojamiento (cid_id, alo_nombre, alo_descripcion, alo_direccion, alo_rooms, alo_baths, alo_activo) VALUES (?, ?, ?, ?, ?, ?, TRUE)");
+            $stmt = $db->Prepare("INSERT INTO bb_alojamiento (cid_id, alo_nombre, alo_descripcion, alo_direccion, alo_rooms, alo_baths, alo_beds_1p, alo_beds_2p, alo_pool, alo_barbecue, alo_url, alo_activo) 
+                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, TRUE)");
 
             if (!$stmt):
                 throw new Exception("La inserción del alojamiento falló en su preparación.");
@@ -144,7 +155,12 @@ class Accomodation
             $direccion = utf8_decode($db->clearText($direccion));
             $rooms = utf8_decode($db->clearText($rooms));
             $baths = utf8_decode($db->clearText($baths));
-            $bind = $stmt->bind_param("isssii", $city, $name, $description, $direccion, $rooms, $baths);
+            $beds1p = utf8_decode($db->clearText($beds1p));
+            $beds2p = utf8_decode($db->clearText($beds2p));
+            $pool = utf8_decode($db->clearText($pool));
+            $barb = utf8_decode($db->clearText($barb));
+            $url = utf8_decode($db->clearText($url));
+            $bind = $stmt->bind_param("isssiiiiiis", $city, $name, $description, $direccion, $rooms, $baths, $beds1p, $beds2p, $pool, $barb, $url);
 
             if (!$bind):
                 throw new Exception("La inserción del alojamiento falló en su binding.");
@@ -242,17 +258,23 @@ class Accomodation
      * @param $direccion
      * @param $rooms
      * @param $baths
-     * @param null $db
-     * @return array
+     * @param $beds1p
+     * @param $beds2p
+     * @param $pool
+     * @param $barb
+     * @param $url
+     * @param $db
+     * @return array|bool[]
      */
-    public function mod($id, $city, $name, $description, $direccion, $rooms, $baths, $db = null): array
+    public function mod($id, $city, $name, $description, $direccion, $rooms, $baths, $beds1p, $beds2p, $pool, $barb, $url, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
         endif;
 
         try {
-            $stmt = $db->Prepare("UPDATE bb_alojamiento SET cid_id = ?, alo_nombre = ?, alo_descripcion = ?, alo_direccion = ?, alo_rooms = ?, alo_baths = ? WHERE alo_id = ?");
+            $stmt = $db->Prepare("UPDATE bb_alojamiento SET cid_id = ?, alo_nombre = ?, alo_descripcion = ?, alo_direccion = ?, alo_rooms = ?, alo_baths = ?, alo_beds_1p = ?, alo_beds_2p = ?, alo_pool = ?, alo_barbecue = ?, alo_url = ?  
+                                        WHERE alo_id = ?");
 
             if (!$stmt):
                 throw new Exception("La modificación del alojamiento falló en su preparación.");
@@ -264,7 +286,12 @@ class Accomodation
             $direccion = utf8_decode($db->clearText($direccion));
             $rooms = utf8_decode($db->clearText($rooms));
             $baths = utf8_decode($db->clearText($baths));
-            $bind = $stmt->bind_param("isssiii", $city, $name, $description, $direccion, $rooms, $baths, $id);
+            $beds1p = utf8_decode($db->clearText($beds1p));
+            $beds2p = utf8_decode($db->clearText($beds2p));
+            $pool = utf8_decode($db->clearText($pool));
+            $barb = utf8_decode($db->clearText($barb));
+            $url = utf8_decode($db->clearText($url));
+            $bind = $stmt->bind_param("isssiii", $city, $name, $description, $direccion, $rooms, $baths, $beds1p, $beds2p, $pool, $barb, $url, $id);
 
             if (!$bind):
                 throw new Exception("La modificación del alojamiento falló en su binding.");
