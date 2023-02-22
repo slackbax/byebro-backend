@@ -20,7 +20,6 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Imagen</th>
                     <th>Nombre</th>
                     <th>Descripción</th>
                     <th>Habitaciones</th>

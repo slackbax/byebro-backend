@@ -21,22 +21,17 @@ $primaryKey = 'alo_id';
 // indexes
 $columns = array(
     array('db' => 'alo_id', 'dt' => 0, 'field' => 'alo_id'),
-    array('db' => 'alo_pic', 'dt' => 1, 'field' => 'alo_pic',
-        'formatter' => function ($d, $row) {
-            return '<a href="' . $d . '" target="_blank"><img src="' . $d . '" height="60px"></a>';
-        }
-    ),
-    array('db' => 'alo_nombre', 'dt' => 2, 'field' => 'alo_nombre'),
-    array('db' => 'alo_descripcion', 'dt' => 3, 'field' => 'alo_descripcion'),
-    array('db' => 'alo_rooms', 'dt' => 4, 'field' => 'alo_rooms'),
-    array('db' => 'alo_baths', 'dt' => 5, 'field' => 'alo_baths'),
-    array('db' => 'cid_id', 'dt' => 6, 'field' => 'cid_id',
+    array('db' => 'alo_nombre', 'dt' => 1, 'field' => 'alo_nombre'),
+    array('db' => 'alo_descripcion', 'dt' => 2, 'field' => 'alo_descripcion'),
+    array('db' => 'alo_rooms', 'dt' => 3, 'field' => 'alo_rooms'),
+    array('db' => 'alo_baths', 'dt' => 4, 'field' => 'alo_baths'),
+    array('db' => 'cid_id', 'dt' => 5, 'field' => 'cid_id',
         'formatter' => function ($d, $row) use ($c) {
             $ct = $c->get($d, 'd');
             return $ct->cid_nombre . ' (' . $ct->cid_pais . ')';
         }
     ),
-    array('db' => 'alo_id', 'dt' => 7, 'field' => 'alo_id',
+    array('db' => 'alo_id', 'dt' => 6, 'field' => 'alo_id',
         'formatter' => function ($d, $row) use ($a) {
             $ac = $a->get($d);
             $string = '';

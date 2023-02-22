@@ -115,8 +115,7 @@
                     <div class="form-group col-md-12">
                         <label for="iimage">Imagen de Referencia</label>
                         <div class="controls">
-                            <a id="pLink" href="<?php echo $ac->alo_pic ?>" target="_blank"><img id="pImg" src="<?php echo $ac->alo_pic ?>" height="100px"></a><br><br>
-                            <input name="iimage[]" class="multi" id="iimage" type="file" size="16" accept="gif|jpg|png|jpeg" maxlength="1">
+                            <input name="iimage[]" class="multi" id="iimage" type="file" size="16" accept="gif|jpg|png|jpeg" maxlength="10">
                             <p class="help-block">Formatos admitidos: GIF, JPG, JPEG, PNG</p>
                         </div>
                     </div>

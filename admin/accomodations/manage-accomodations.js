@@ -2,7 +2,6 @@ $(document).ready(function () {
     var tableAccm = $("#taccomodations").DataTable({
         "columns": [
             {width: "30px", className: "text-right"},
-            {className: "text-center"},
             null,
             null,
             {className: "text-right"},
@@ -13,7 +12,7 @@ $(document).ready(function () {
             {
                 extend: 'excel',
                 exportOptions: {
-                    columns: [0, 2, 3, 4, 5, 6]
+                    columns: [0, 2, 3, 4, 5]
                 }
             }
         ],

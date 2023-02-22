@@ -110,7 +110,7 @@
                     <div class="form-group col-md-12">
                         <label for="iimage">Imagen de Referencia</label>
                         <div class="controls">
-                            <input name="iimage[]" class="multi" id="iimage" type="file" size="16" accept="gif|jpg|png|jpeg" maxlength="1">
+                            <input name="iimage[]" class="multi" id="iimage" type="file" size="16" accept="gif|jpg|png|jpeg" maxlength="10">
                             <p class="help-block">Formatos admitidos: GIF, JPG, JPEG, PNG</p>
                         </div>
                     </div>

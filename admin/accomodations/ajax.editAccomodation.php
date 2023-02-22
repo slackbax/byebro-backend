@@ -19,7 +19,7 @@ if (extract($_POST)):
         endif;
 
         if (!empty($_FILES)):
-            $targetFolder = 'dist/img/places/';
+            $targetFolder = 'admin/dist/img/places/';
             $targetPath = $_BASEDIR[0] . $targetFolder;
 
             $u = $a->get($iid);
@@ -30,7 +30,7 @@ if (extract($_POST)):
 
             $img_old = $_BASEDIR[0] . $u->alo_pic;
 
-            if (!is_readable($img_old)):
+            if (!is_readable($img_old) and !$_default):
                 throw new Exception('El archivo solicitado no existe.');
             endif;
 
@@ -40,19 +40,23 @@ if (extract($_POST)):
                 endif;
             endif;
 
-            foreach ($_FILES as $aux => $file):
-                $tempFile = $file['tmp_name'][0];
-                $fileName = removeAccents(str_replace(' ', '_', $file['name'][0]));
-                $targetFile = rtrim($targetPath, '/') . '/' . $iid . '_' . $fileName;
-                move_uploaded_file($tempFile, $targetFile);
-                $pic_route = 'dist/img/places/' . $iid . '_' . $fileName;
-            endforeach;
+            $total_files = count($_FILES['iimage']['name']);
 
-            $ins_p = $a->setPicture($iid, $pic_route, $db);
+            for ($i = 0; $i < $total_files; $i++):
+                $tempFile = $_FILES['tmp_name'][$i];
+                $fileName = removeAccents(str_replace(' ', '_', $_FILES['name'][$i]));
+                $targetFile = rtrim($targetPath, '/') . '/' . $ins['msg'] . '_' . $fileName;
+                if (!move_uploaded_file($tempFile, $targetFile)):
+                  throw new Exception('Error al guardar la imagen. ', 0);
+                endif;
+                $pic_route = 'dist/img/places/' . $ins['msg'] . '_' . $fileName;
 
-            if (!$ins_p['estado']):
-                throw new Exception('Error al guardar la imagen. ' . $ins_p['msg'], 0);
-            endif;
+                $ins_p = $a->setPicture($ins['msg'], $pic_route, $db);
+
+                if (!$ins_p['estado']):
+                  throw new Exception('Error al guardar la imagen. ' . $ins_p['msg'], 0);
+                endif;
+            endfor;
         endif;
 
         $db->Commit();

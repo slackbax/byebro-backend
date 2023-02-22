@@ -24,7 +24,7 @@ $last_f = 5;
 
         <section class="content container-fluid">
             <div class="row">
-                <?php $cot = ($_admin) ? $c->getAll() : $c->getByCotizante($us_co->co_id) ?>
+                <?php //$cot = ($_admin) ? $c->getAll() : $c->getByCotizante($us_co->co_id) ?>
                 <div class="col-sm-6 col-lg-4 col-lg-offset-2">
                     <a class="text-white" href="index.php?section=quotations&sbs=managequotations">
                         <div class="info-box bg-blue">
@@ -33,8 +33,8 @@ $last_f = 5;
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Cotizaciones</span>
-                                <span class="info-box-number"><?php echo count($cot) ?></span>
-                                <span class="progress-description">Registrada<?php if (count($cot) != 1) echo 's' ?></span>
+                                <span class="info-box-number"><?php //echo count($cot) ?></span>
+                                <span class="progress-description">Registrada<?php //if (count($cot) != 1) echo 's' ?></span>
                             </div>
                         </div>
                     </a>

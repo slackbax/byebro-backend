@@ -191,7 +191,7 @@ class Accomodation
         endif;
 
         try {
-            $stmt = $db->Prepare("UPDATE bb_alojamiento SET alo_pic = ? WHERE alo_id = ?");
+            $stmt = $db->Prepare("UPDATE bb_alojamiento_pic SET ap_path = ? WHERE alo_id = ?");
 
             if (!$stmt):
                 throw new Exception("La inserción de la imagen falló en su preparación.");
@@ -291,7 +291,7 @@ class Accomodation
             $pool = utf8_decode($db->clearText($pool));
             $barb = utf8_decode($db->clearText($barb));
             $url = utf8_decode($db->clearText($url));
-            $bind = $stmt->bind_param("isssiii", $city, $name, $description, $direccion, $rooms, $baths, $beds1p, $beds2p, $pool, $barb, $url, $id);
+            $bind = $stmt->bind_param("isssiiiiiisi", $city, $name, $description, $direccion, $rooms, $baths, $beds1p, $beds2p, $pool, $barb, $url, $id);
 
             if (!$bind):
                 throw new Exception("La modificación del alojamiento falló en su binding.");
