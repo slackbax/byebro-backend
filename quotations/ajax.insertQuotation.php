@@ -41,7 +41,7 @@ if (extract($_POST)):
                 $ins_user = $user->set(3, $iname, $ilastnamep, $ilastnamem, $iemail, $rut_san, $psw, $db);
 
                 if (!$ins_user['estado']):
-                    throw new Exception('Error al guardar los datos de usuario. ' . $ins_user['msg'], 0);
+                    throw new Exception('Error al guardar los datos de usuario cotizante. ' . $ins_user['msg'], 0);
                 endif;
 
                 $phone = '(' . $icod . ')' . $iphone;
@@ -49,7 +49,7 @@ if (extract($_POST)):
                 $ins_co = $co->set($ins_user['msg'], $irut, $iname, $ilastnamep, $ilastnamem, $iemail, $phone, $db);
 
                 if (!$ins_co['estado']):
-                    throw new Exception('Error al guardar los datos de cotizante. ' . $ins_co['msg'], 0);
+                    throw new Exception('Error al guardar los datos de cotizante cotizante. ' . $ins_co['msg'], 0);
                 endif;
 
                 $iid = $ins_co['msg'];

@@ -201,7 +201,7 @@ class User
             endif;
 
             if (!$stmt->execute()):
-                throw new Exception("La inserción del usuario falló en su ejecución.");
+                throw new Exception("La inserción del usuario falló en su ejecución. " . $stmt->error);
             endif;
 
             $result = array('estado' => true, 'msg' => $stmt->insert_id);
