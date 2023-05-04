@@ -181,7 +181,7 @@ class User
         endif;
 
         try {
-            $stmt = $db->Prepare("INSERT INTO bb_usuario (perf_id, us_nombres, us_ap, us_am, us_email, us_username, us_password, us_activo) VALUES (?, ?, ?, ?, ?, ?, ?, TRUE)");
+            $stmt = $db->Prepare("INSERT INTO bb_usuario (perf_id, us_nombres, us_ap, us_am, us_email, us_username, us_password, us_psw, us_activo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, TRUE)");
 
             if (!$stmt):
                 throw new Exception("La inserción del usuario falló en su preparación.");
@@ -193,8 +193,8 @@ class User
             $am = utf8_decode($db->clearText($am));
             $email = utf8_decode($db->clearText($email));
             $user = utf8_decode($db->clearText($user));
-            $pass = md5(utf8_decode($db->clearText($pass)));
-            $bind = $stmt->bind_param("issssss", $profile, $name, $ap, $am, $email, $user, $pass);
+            $pass_enc = md5(utf8_decode($db->clearText($pass)));
+            $bind = $stmt->bind_param("isssssss", $profile, $name, $ap, $am, $email, $user, $pass_enc, $pass);
 
             if (!$bind):
                 throw new Exception("La inserción del usuario falló en su binding.");
