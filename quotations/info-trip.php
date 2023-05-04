@@ -20,24 +20,6 @@
                 </div>
             </div>
 
-            <!--
-            <div class="row">
-                <div class="form-group col-md-6 col-lg-4 has-feedback" id="gocountry">
-                    <label class="control-label" for="iNocountry">País de origen *</label>
-                    <select class="form-control" id="iNocountry" name="iocountry" required>
-                        <option>Cargando países...</option>
-                    </select>
-                </div>
-
-                <div class="form-group col-md-6 col-lg-4 has-feedback" id="gdcountry">
-                    <label class="control-label" for="iNdcountry">País de destino *</label>
-                    <select class="form-control" id="iNdcountry" name="idcountry" required>
-                        <option>Cargando países...</option>
-                    </select>
-                </div>
-            </div>
-            -->
-
             <div class="row">
                 <div class="form-group col-md-6 col-lg-4 has-feedback" id="gocity">
                     <label class="control-label" for="iNocity">Ciudad de origen *</label>

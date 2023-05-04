@@ -194,6 +194,7 @@ class Participante
 
     /**
      * @param $cot
+     * @param $us
      * @param $rut
      * @param $name
      * @param $ap
@@ -204,23 +205,24 @@ class Participante
      * @param $cargo
      * @param $cotiza
      * @param $viaje
-     * @param null $db
+     * @param $db
      * @return array
      */
-    public function set($cot, $rut, $name, $ap, $am, $edad, $email, $phone, $cargo, $cotiza, $viaje, $db = null): array
+    public function set($cot, $us, $rut, $name, $ap, $am, $edad, $email, $phone, $cargo, $cotiza, $viaje, $db = null): array
     {
         if (is_null($db)):
             $db = new myDBC();
         endif;
 
         try {
-            $stmt = $db->Prepare("INSERT INTO bb_participante (cot_id, par_rut, par_nombres, par_ap, par_am, par_edad, par_email, par_telefono, par_encargado, par_cotiza, par_viaja) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $db->Prepare("INSERT INTO bb_participante (cot_id, us_id, par_rut, par_nombres, par_ap, par_am, par_edad, par_email, par_telefono, par_encargado, par_cotiza, par_viaja) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             if (!$stmt):
                 throw new Exception("La inserción del participante falló en su preparación.");
             endif;
 
             $cot = $db->clearText($cot);
+            $us = $db->clearText($us);
             $rut = utf8_decode($db->clearText($rut));
             $name = utf8_decode($db->clearText($name));
             $ap = utf8_decode($db->clearText($ap));
@@ -228,7 +230,7 @@ class Participante
             $edad = $db->clearText($edad);
             $email = utf8_decode($db->clearText(mb_strtolower($email)));
             $phone = utf8_decode($db->clearText($phone));
-            $bind = $stmt->bind_param("issssississ", $cot, $rut, $name, $ap, $am, $edad, $email, $phone, $cargo, $cotiza, $viaje);
+            $bind = $stmt->bind_param("iissssississ", $cot, $us, $rut, $name, $ap, $am, $edad, $email, $phone, $cargo, $cotiza, $viaje);
 
             if (!$bind):
                 throw new Exception("La inserción del participante falló en su binding.");

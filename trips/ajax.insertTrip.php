@@ -26,7 +26,7 @@ if (extract($_POST)):
         $phone = '(' . $icod . ')' . $iphone;
         $act_co = $co->modViaje($coid, $iemail, $phone, $db);
 
-        if ($act_co['estado'] == false):
+        if (!$act_co['estado']):
             throw new Exception('Error al guardar los datos del cotizante. ' . $act_co['msg'], 0);
         endif;
 
@@ -46,27 +46,27 @@ if (extract($_POST)):
         /** Se crea el viaje **/
         $ins_vi = $vi->set($iocity, $idcity, $ialoja, $iid, $vi_code, $icost, $f_ini, $f_ter, $db);
 
-        if ($ins_vi['estado'] == false):
+        if (!$ins_vi['estado']):
             throw new Exception('Error al guardar los datos del viaje. ' . $ins_vi['msg'], 0);
         endif;
 
         /** Se actualiza el estado de la cotización **/
         $mod_state = $cot->setLast($iid, $db);
 
-        if ($mod_state['estado'] == false):
+        if (!$mod_state['estado']):
             throw new Exception('Error al modificar estados anteriores de la cotización. ' . $mod_state['msg'], 0);
         endif;
 
         $mod_state = $cot->setState(4, $iid, $db);
 
-        if ($mod_state['estado'] == false):
+        if (!$mod_state['estado']):
             throw new Exception('Error al guardar el estado de la cotización. ' . $mod_state['msg'], 0);
         endif;
 
         /** Se crea el estado inicial del viaje **/
         $ins_state = $vi->setState(1, $ins_vi['msg'], $db);
 
-        if ($ins_state['estado'] == false):
+        if (!$ins_state['estado']):
             throw new Exception('Error al guardar el estado del viaje. ' . $ins_state['msg'], 0);
         endif;
 
@@ -75,16 +75,16 @@ if (extract($_POST)):
             if (isset($iidpart[$k])):
                 $act_part = $par->mod($iidpart[$k], $v, $inamepart[$k], $ilnppart[$k], $ilnmpart[$k], $iedadpart[$k], $iemailpart[$k], $phone, true, $db);
 
-                if ($act_part['estado'] == false):
+                if (!$act_part['estado']):
                     throw new Exception('Error al guardar los datos del participante. ' . $act_part['msg'], 0);
                 endif;
             else:
-                $cargo = ($k == 0) ? true : false;
+                $cargo = $k == 0;
                 $phone = '(' . $icodpart[$k] . ')' . $iphonepart[$k];
 
                 $ins_part = $par->set($iid, $v, $inamepart[$k], $ilnppart[$k], $ilnmpart[$k], $iedadpart[$k], $iemailpart[$k], $phone, $cargo, false, true, $db);
 
-                if ($ins_part['estado'] == false):
+                if (!$ins_part['estado']):
                     throw new Exception('Error al guardar los datos del participante. ' . $ins_part['msg'], 0);
                 endif;
             endif;
@@ -95,7 +95,7 @@ if (extract($_POST)):
             foreach ($iextra as $k => $v):
                 $ins_extra = $vi->setExtra($ins_vi['msg'], $v, $icant[$k], $db);
 
-                if ($ins_extra['estado'] == false):
+                if (!$ins_extra['estado']):
                     throw new Exception('Error al guardar los extras de la cotización. ' . $ins_extra['msg'], 0);
                 endif;
             endforeach;
@@ -103,7 +103,7 @@ if (extract($_POST)):
 
         $db->Commit();
         $db->autoCommit(TRUE);
-        $response = array('type' => true, 'msg' => $cot_code);
+        $response = array('type' => true, 'msg' => $vi_code);
         echo json_encode($response);
     } catch (Exception $e) {
         $db->Rollback();

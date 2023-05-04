@@ -117,7 +117,7 @@
                     <button type="button" class="btn btn-default" id="btn-back-trip"><i class="fa fa-chevron-circle-left"></i> Volver al paso 1</button>
                 </div>
                 <div class="col-xs-6 text-right">
-                    <button type="button" class="btn btn-info" id="btn-extras">Siguiente paso: Adicionales <i class="fa fa-chevron-circle-right"></i></button>
+                    <button type="button" class="btn btn-info" id="btn-homes">Siguiente paso: Alojamientos <i class="fa fa-chevron-circle-right"></i></button>
                 </div>
             </div>
         </div>

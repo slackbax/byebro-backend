@@ -16,6 +16,7 @@ if (extract($_POST)):
     $user = new User();
     $par = new Participante();
     $ex = new Extra();
+    $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     try {
         $db->autoCommit(FALSE);
@@ -26,7 +27,6 @@ if (extract($_POST)):
 
             /** Si el cotizante no está registrado **/
             if (is_null($r->co_id)):
-                $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
                 $length = 4;
                 $psw = '';
                 $max = mb_strlen($keyspace, '8bit') - 1;
@@ -40,7 +40,7 @@ if (extract($_POST)):
                 /** Se crea el usuario del cotizante **/
                 $ins_user = $user->set(3, $iname, $ilastnamep, $ilastnamem, $iemail, $rut_san, $psw, $db);
 
-                if ($ins_user['estado'] == false):
+                if (!$ins_user['estado']):
                     throw new Exception('Error al guardar los datos de usuario. ' . $ins_user['msg'], 0);
                 endif;
 
@@ -48,7 +48,7 @@ if (extract($_POST)):
                 /** Si crea el cotizante **/
                 $ins_co = $co->set($ins_user['msg'], $irut, $iname, $ilastnamep, $ilastnamem, $iemail, $phone, $db);
 
-                if ($ins_co['estado'] == false):
+                if (!$ins_co['estado']):
                     throw new Exception('Error al guardar los datos de cotizante. ' . $ins_co['msg'], 0);
                 endif;
 
@@ -60,7 +60,6 @@ if (extract($_POST)):
             endif;
         endif;
 
-        $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $length = 10;
         $cot_code = '';
         $max = mb_strlen($keyspace, '8bit') - 1;
@@ -76,25 +75,50 @@ if (extract($_POST)):
         /** Se crea la cotización **/
         $ins_cot = $cot->set($iocity, $idcity, $iid, $cot_code, $f_ini, $f_ter, $cot_code, $db);
 
-        if ($ins_cot['estado'] == false):
+        if (!$ins_cot['estado']):
             throw new Exception('Error al guardar los datos de la cotización. ' . $ins_cot['msg'], 0);
         endif;
 
         /** Se crea el estado inicial de la cotización **/
         $ins_state = $cot->setState(1, $ins_cot['msg'], $db);
 
-        if ($ins_state['estado'] == false):
+        if (!$ins_state['estado']):
             throw new Exception('Error al guardar el estado de la cotización. ' . $ins_state['msg'], 0);
         endif;
 
+        $length = 4;
         /** Se crean los participantes **/
         foreach ($irutpart as $k => $v):
-            $cargo = ($k == 0) ? true : false;
+            $rut_san = str_replace('.', '', $v);
+
+            $existe_us = $user->existsUser($rut_san);
+            if (!$existe_us['msg']):
+                $psw = '';
+                $max = mb_strlen($keyspace, '8bit') - 1;
+
+                for ($i = 0; $i < $length; ++$i):
+                  $psw .= $keyspace[random_int(0, $max)];
+                endfor;
+
+                /** Se crea el usuario del participante **/
+                $ins_user = $user->set(4, $inamepart[$k], $ilnppart[$k], $ilnmpart[$k], $iemailpart[$k], $rut_san, $psw, $db);
+
+                if (!$ins_user['estado']):
+                  throw new Exception('Error al guardar los datos de usuario. ' . $ins_user['msg'], 0);
+                endif;
+
+                $part_user = $ins_user['msg'];
+            else:
+                $user_d = $user->getByUsername($rut_san);
+                $part_user = $user_d->us_id;
+            endif;
+
+            $cargo = $k == 0;
             $phone = '(' . $icodpart[$k] . ')' . $iphonepart[$k];
 
-            $ins_part = $par->set($ins_cot['msg'], $v, $inamepart[$k], $ilnppart[$k], $ilnmpart[$k], $iedadpart[$k], $iemailpart[$k], $phone, $cargo, true, 0, $db);
+            $ins_part = $par->set($ins_cot['msg'], $part_user, $v, $inamepart[$k], $ilnppart[$k], $ilnmpart[$k], $iedadpart[$k], $iemailpart[$k], $phone, $cargo, true, 0, $db);
 
-            if ($ins_part['estado'] == false):
+            if (!$ins_part['estado']):
                 throw new Exception('Error al guardar los datos del participante. ' . $ins_part['msg'], 0);
             endif;
         endforeach;
@@ -104,7 +128,7 @@ if (extract($_POST)):
             foreach ($iextra as $k => $v):
                 $ins_extra = $cot->setExtra($ins_cot['msg'], $v, $icant[$k], $db);
 
-                if ($ins_extra['estado'] == false):
+                if (!$ins_extra['estado']):
                     throw new Exception('Error al guardar los extras de la cotización. ' . $ins_extra['msg'], 0);
                 endif;
             endforeach;

@@ -21,7 +21,6 @@
         <ul class="nav nav-tabs nav-tabs-bb" id="sectionTabs" role="tablist">
             <li role="presentation" class="active"><a href="#trip" aria-controls="trip" role="tab">Paso 1: Detalles de viaje</a></li>
             <li role="presentation"><a href="#people" aria-controls="people" role="tab">Paso 2: Participantes</a></li>
-            <li role="presentation"><a href="#extras" aria-controls="extras" role="tab">Paso 3: Adicionales</a></li>
             <li role="presentation"><a href="#summary" aria-controls="summary" role="tab">Resumen</a></li>
         </ul>
 
@@ -35,10 +34,6 @@
 
             <div role="tabpanel" class="tab-pane fade" id="people">
                 <?php include 'info-people.php' ?>
-            </div>
-
-            <div role="tabpanel" class="tab-pane fade" id="extras">
-                <?php include 'info-extras.php' ?>
             </div>
 
             <div role="tabpanel" class="tab-pane fade" id="summary">

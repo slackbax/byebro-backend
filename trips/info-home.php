@@ -71,7 +71,7 @@
         <div class="box-footer">
             <div class="row">
                 <div class="col-xs-6">
-                    <button type="button" class="btn btn-default" id="btn-back-extras"><i class="fa fa-chevron-circle-left"></i> Volver al paso 3</button>
+                    <button type="button" class="btn btn-default" id="btn-back-people"><i class="fa fa-chevron-circle-left"></i> Volver al paso 2</button>
                 </div>
                 <div class="col-xs-6 text-right">
                     <button type="button" class="btn btn-info" id="btn-summary"><i class="fa fa-search"></i> Ver mi resumen</button>

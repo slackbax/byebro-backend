@@ -1,18 +1,4 @@
 $(document).ready(function () {
-
-    /*function getCountries() {
-        $.ajax({
-            type: 'POST',
-            url: 'src/rest.allCountries.php',
-            dataType: 'json'
-        }).done(function (r) {
-            $('#iNocountry, #iNdcountry').html('').append($("<option />").val('').text('Selecciona el país'));
-            $.each(r, function (k, v) {
-                $('#iNocountry, #iNdcountry').append($("<option />").val(v.alpha3Code).text(v.name));
-            })
-        });
-    }*/
-
     function validateForm() {
         $('#submitLoader').css('display', 'inline-block');
         return true;
