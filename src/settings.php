@@ -1,8 +1,10 @@
 <?php
 
-define('BASEFOLDER',    '/byebro/');
-define('SESSION_TIME',  1800);
-define('DB_HOST',       'localhost');
-define('DB_DATABASE',   'byebro');
-define('DB_USER',       'root');
-define('DB_PASSWORD',   '');
+const BASEFOLDER = '/byebro/';
+const SESSION_TIME = 1800;
+const DB_HOST = 'localhost';
+const DB_DATABASE = 'byebro';
+const DB_USER = 'root';
+const DB_PASSWORD = '';
+const MAIL_USERNAME = 'contacto@thebyeco.com';
+const MAIL_PASSWORD = 'fnzgphjbuaeztgcu';

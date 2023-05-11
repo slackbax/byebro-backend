@@ -1,5 +1,10 @@
 <?php
+session_start();
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../vendor/autoload.php';
 include '../class/classMyDBC.php';
 include '../class/classCotizacion.php';
 include '../class/classCotizante.php';
@@ -8,6 +13,18 @@ include '../class/classParticipante.php';
 include '../class/classExtra.php';
 include '../src/fn.php';
 include '../src/sessionControl.ajax.php';
+
+$mail = new PHPMailer();
+$mail->SMTPDebug = 0;
+$mail->isSMTP();
+$mail->Host = 'smtp.gmail.com';
+$mail->SMTPAuth = true;
+$mail->Username = MAIL_USERNAME;
+$mail->Password = MAIL_PASSWORD;
+$mail->SMTPSecure = 'tls';
+$mail->Port = 587;
+$mail->isHTML(true);
+$mail->Subject = 'Gracias por elegir a Bye Company para tu viaje!';
 
 if (extract($_POST)):
     $db = new myDBC();
@@ -121,6 +138,22 @@ if (extract($_POST)):
             if (!$ins_part['estado']):
                 throw new Exception('Error al guardar los datos del participante. ' . $ins_part['msg'], 0);
             endif;
+
+            $mail->setFrom(MAIL_USERNAME, 'Plataforma Bye Company');
+            $mail->addAddress($iemailpart[$k], $iemailpart[$k]);
+            $mail->Body = 'Estimado/a ' . $inamepart[$k] . ',<br><br>' .
+              'Gracias por elegir a <strong>Bye Company</strong> como proveedor de tu próximo viaje. Esperamos brindarte una experiencia única.<br>
+Te hemos creado una cuenta en nuestro sitio web, donde podrás encontrar toda la información sobre tu viaje, incluyendo invitados, items incluidos y extras para adquirir.<br><br>' .
+              '<strong>Datos de ingreso</strong><br>' .
+              'Usuario: '. $rut_san .'<br>Contraseña: ' . $psw . '<br><br>' .
+              'Estamos siempre a tu disposición para cualquier consulta o necesidad. Esperamos verte pronto!<br><br>' .
+              'Atentamente,<br>' .
+              '<strong>El equipo de Bye Company</strong>';
+
+            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+            if (!$mail->send())
+                error_log('Error al enviar el correo de notificación. ' . $mail->ErrorInfo);
         endforeach;
 
         /** Se crean los extras **/
