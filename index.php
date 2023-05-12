@@ -47,21 +47,18 @@
     <link rel="stylesheet" href="bower_components/bootstrap-pincode-input/css/bootstrap-pincode-input.css">
     <!-- iCheck -->
     <link rel="stylesheet" href="plugins/iCheck/all.css">
+    <!-- jquery-pinlogin -->
+    <link rel="stylesheet" href="node_modules/jquery-pinlogin/src/jquery.pinlogin.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="dist/css/bb.css">
     <link rel="stylesheet" href="dist/css/skins/skin-red.min.css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
     <!-- jQuery 3 -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <!-- pincode-input -->
-    <script src="bower_components/bootstrap-pincode-input/js/bootstrap-pincode-input.js"></script>
+    <!--<script src="bower_components/bootstrap-pincode-input/js/bootstrap-pincode-input.js"></script>-->
+    <!-- jQuery-pinlogin -->
+    <script src="node_modules/jquery-pinlogin/src/jquery.pinlogin.js"></script>
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>

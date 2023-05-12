@@ -145,6 +145,7 @@ if (extract($_POST)):
               'Gracias por elegir a <strong>Bye Company</strong> como proveedor de tu próximo viaje. Esperamos brindarte una experiencia única.<br>
 Te hemos creado una cuenta en nuestro sitio web, donde podrás encontrar toda la información sobre tu viaje, incluyendo invitados, items incluidos y extras para adquirir.<br><br>' .
               '<strong>Datos de ingreso</strong><br>' .
+              'URL: <a href="https://www.byebro.cl/mis-viajes" target="_blank">https://www.byebro.cl/mis-viajes</a><br>' .
               'Usuario: '. $rut_san .'<br>Contraseña: ' . $psw . '<br><br>' .
               'Estamos siempre a tu disposición para cualquier consulta o necesidad. Esperamos verte pronto!<br><br>' .
               'Atentamente,<br>' .
