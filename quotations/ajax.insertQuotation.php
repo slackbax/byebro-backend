@@ -70,6 +70,7 @@ if (extract($_POST)):
                 endif;
 
                 $iid = $ins_co['msg'];
+                $user_cotizante = $rut_san;
 
             /** Si el cotizante ya está registrado **/
             else:
@@ -108,8 +109,7 @@ if (extract($_POST)):
         foreach ($irutpart as $k => $v):
             $rut_san = str_replace('.', '', $v);
 
-            $existe_us = $user->existsUser($rut_san);
-            if (!$existe_us['msg']):
+            if ($user_cotizante != $rut_san):
                 $psw = '';
                 $max = mb_strlen($keyspace, '8bit') - 1;
 
