@@ -142,11 +142,12 @@ if (extract($_POST)):
             $mail->setFrom(MAIL_USERNAME, 'Plataforma Bye Company');
             $mail->addAddress($iemailpart[$k], $iemailpart[$k]);
             $mail->Body = 'Estimado/a ' . $inamepart[$k] . ',<br><br>' .
-              'Gracias por elegir a <strong>Bye Company</strong> como proveedor de tu próximo viaje. Esperamos brindarte una experiencia única.<br>
-Te hemos creado una cuenta en nuestro sitio web, donde podrás encontrar toda la información sobre tu viaje, incluyendo invitados, items incluidos y extras para adquirir.<br><br>' .
+              'Nos encanta que hayas elegido <strong>Bye Company</strong> como partner en tu próxima experiencia. Y como nuestro objetivo es crear un viaje único, te creamos una 
+cuenta exclusiva en nuestra plataforma de clientes.<br>Podrás encontrar toda la información de tu viaje, revisar la casa, ubicación, invitados, datos prácticos, ítems incluidos y extras para adquirir, entre otras.
+<br><br>' .
               '<strong>Datos de ingreso</strong><br>' .
               'URL: <a href="https://www.byebro.cl/mis-viajes" target="_blank">https://www.byebro.cl/mis-viajes</a><br>' .
-              '<i>(Se recomienda utilizar tu PC/Mac para entrar a la plataforma, aún en versión BETA)</i><br>' .
+              '<i>(Se recomienda utilizar tu Computador para entrar a la plataforma, aún está en versión BETA)</i><br>' .
               'Usuario: '. $rut_san .'<br>Contraseña: ' . $psw . '<br><br>' .
               'Estamos siempre a tu disposición para cualquier consulta o necesidad. Esperamos verte pronto!<br><br>' .
               'Atentamente,<br>' .
