@@ -1,6 +1,6 @@
 {
     "require": {
-        "guzzlehttp/guzzle": "6.5.8",
+        "guzzlehttp/guzzle": "7.12.1",
         "phpmailer/phpmailer": "^6.1"
     }
 }
